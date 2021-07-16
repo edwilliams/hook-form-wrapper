@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Form from './form'
 
-function FormDemo() {
+const FormDemo = () => {
   const [data, setData] = useState()
   return (
     <div>
