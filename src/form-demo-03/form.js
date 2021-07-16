@@ -1,36 +1,40 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import cx from 'classnames'
-// import Input from '../components/input'
-
 import { v4 as uuidv4 } from 'uuid'
+import Joi from 'joi'
+import { useValidationResolver } from './hooks'
 
 export const formId = () => uuidv4()
 
 let submitIds = {}
 
-export const Form = ({ id, inputs, className, onSubmit }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-    ...rest
-  } = useForm()
+export const Form = ({ id, inputs, validation, className, onSubmit }) => {
+  const validationSchema = Joi.object(validation)
 
-  console.log(errors)
+  const resolver = useValidationResolver(validationSchema)
+  const { handleSubmit, register } = useForm({ resolver })
 
-  submitIds[id] = { ref: useRef(), errors, names: inputs.map(({ name }) => name) }
+  submitIds[id] = {
+    ref: useRef(),
+    // errors,
+    names: inputs.map(({ name }) => name)
+  }
+
+  const submit = data => {
+    console.log(data)
+    handleSubmit(onSubmit)
+  }
 
   return (
-    <form data-id={id} className={cx('', className)} onSubmit={handleSubmit(onSubmit)}>
+    <form data-id={id} className={cx('', className)} onSubmit={handleSubmit(data => submit(data))}>
       {inputs.map(({ name, label, opts = {} }, key) => {
         return (
           <div key={key}>
             <label>{label}</label>
             <br />
             <input {...register(name, opts)} className="border p-2" />
-            {errors[name] && <p className="text-red-500">Error: {errors[name].message}</p>}
+            {/* {errors[name] && <p className="text-red-500">Error: {errors[name].message}</p>} */}
           </div>
         )
       })}
@@ -40,34 +44,14 @@ export const Form = ({ id, inputs, className, onSubmit }) => {
 }
 
 export const FormSummary = ({ id, className }) => {
-  // const [errors, setErrors] = useState([])
-
   const click = () => {
     submitIds[id].ref.current.click()
-
-    // techdebt: .click() is async
-    // setTimeout(() => {
-    //   const errors = Object.entries(submitIds[id].errors).map(arr => ({
-    //     name: arr[0],
-    //     message: arr[1].message
-    //   }))
-    //   setErrors(errors)
-    // }, 0)
   }
 
-  console.log(submitIds[id].names)
+  // console.log(submitIds[id].names)
 
   return (
     <div data-id={id} className={cx('', className)}>
-      {/* {errors.map(({ name, message }) => {
-        return (
-          <div>
-            <p>Name: {name}</p>
-            <p>Message: {message}</p>
-            <hr className="mb-2 mt-2" />
-          </div>
-        )
-      })} */}
       <button className="border p-2 mt-2 cursor-pointer" onClick={click}>
         submit
       </button>

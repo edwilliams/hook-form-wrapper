@@ -1,47 +1,34 @@
 import { useState } from 'react'
 import { formId, Form, FormSummary } from './form'
-import { validateAsync } from './utils'
+import Layout from '../components/layout'
+import Joi from 'joi'
 
+// form with form level validation using JOI
 const FormDemo = () => {
   const [data, setData] = useState()
   const id = formId()
   return (
-    <div className="flex justify-around">
-      <div className="w-1/2">
-        <h3 className="text-lg bold underline mb-8">Form</h3>
+    <Layout
+      left={() => (
         <Form
           id={id}
+          validation={{ description: Joi.string().required() }}
           inputs={[
             {
               name: 'description',
-              label: 'Description',
-              opts: {
-                // required: { value: true, message: 'Please complete description' },
-                // maxLength: { value: 10, message: 'Max length is 10' },
-                validate: {
-                  checkEmail: validateAsync() || 'wibble'
-                }
-              }
+              label: 'Description'
             },
             {
               name: 'question',
-              label: 'Question',
-              opts: {
-                // required: { value: true, message: 'Please complete question' }
-              }
+              label: 'Question'
             }
           ]}
-          className="border p-4"
           onSubmit={data => setData(data)}
         />
-        <p className="bg-black text-white font-mono p-2">{JSON.stringify(data)}</p>{' '}
-      </div>
-
-      <div className="w-1/2">
-        <h3 className="text-lg bold underline mb-8">Form Summary</h3>
-        <FormSummary id={id} className="border p-4" />
-      </div>
-    </div>
+      )}
+      right={() => <FormSummary id={id} className="border p-4" />}
+      output={data}
+    />
   )
 }
 

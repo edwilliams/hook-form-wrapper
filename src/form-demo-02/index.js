@@ -1,14 +1,16 @@
+import { validateSync, validateAsync } from './utils'
 import { useState } from 'react'
-import { Form, FormSummary } from './form'
-import { v4 as uuidv4 } from 'uuid'
+import { formId, Form, FormSummary } from './form'
+import Layout from '../components/layout'
 
+// form broken into 2 separate parts and custom validation
+// form with input level validation using RHF
 const FormDemo = () => {
   const [data, setData] = useState()
-  const id = uuidv4()
+  const id = formId()
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-      <div style={{ width: '320px' }}>
-        <h3>Form</h3>
+    <Layout
+      left={() => (
         <Form
           id={id}
           inputs={[
@@ -17,7 +19,8 @@ const FormDemo = () => {
               label: 'Description',
               opts: {
                 required: { value: true, message: 'Please complete description' },
-                maxLength: { value: 10, message: 'Max length is 10' }
+                maxLength: { value: 10, message: 'Max length is 10' },
+                validate: validateAsync
               }
             },
             {
@@ -30,14 +33,9 @@ const FormDemo = () => {
           ]}
           onSubmit={data => setData(data)}
         />
-        <p>{JSON.stringify(data)}</p>
-      </div>
-
-      <div style={{ width: '320px' }}>
-        <h3>Form Summary</h3>
-        <FormSummary id={id} />
-      </div>
-    </div>
+      )}
+      right={() => <FormSummary id={id} className="border p-4" />}
+    />
   )
 }
 
