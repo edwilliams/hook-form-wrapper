@@ -12,7 +12,10 @@ const FormDemo = () => {
       left={() => (
         <Form
           id={id}
-          validation={{ description: Joi.string().required() }}
+          validation={{
+            description: Joi.string().max(10).required(),
+            question: Joi.string().required()
+          }}
           inputs={[
             {
               name: 'description',
@@ -23,11 +26,14 @@ const FormDemo = () => {
               label: 'Question'
             }
           ]}
-          onSubmit={data => setData(data)}
+          onSubmit={data => {
+            console.log(data)
+            setData(data)
+          }}
         />
       )}
       right={() => <FormSummary id={id} className="border p-4" />}
-      output={data}
+      output={() => <p>{JSON.stringify(data)}</p>}
     />
   )
 }

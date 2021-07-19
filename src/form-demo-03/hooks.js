@@ -1,12 +1,17 @@
 import { useCallback } from 'react'
 
+// NB library limitation - it appears errors come out one at a time per input
 export const useValidationResolver = validationSchema =>
   useCallback(
-    async data => ({
-      values: await validationSchema.validate(data, {
+    async data => {
+      const values = await validationSchema.validate(data, {
         abortEarly: false
-      }),
-      errors: {}
-    }),
+      })
+      // NB object must contain values and errors, but only returns values
+      return {
+        values,
+        errors: {}
+      }
+    },
     [validationSchema]
   )

@@ -21,13 +21,10 @@ export const Form = ({ id, inputs, validation, className, onSubmit }) => {
     names: inputs.map(({ name }) => name)
   }
 
-  const submit = data => {
-    console.log(data)
-    handleSubmit(onSubmit)
-  }
+  const submit = handleSubmit(({ value, error }) => onSubmit({ value, error: error.details }))
 
   return (
-    <form data-id={id} className={cx('', className)} onSubmit={handleSubmit(data => submit(data))}>
+    <form data-id={id} className={cx('', className)} onSubmit={submit}>
       {inputs.map(({ name, label, opts = {} }, key) => {
         return (
           <div key={key}>

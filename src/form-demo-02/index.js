@@ -31,10 +31,14 @@ const FormDemo = () => {
               }
             }
           ]}
-          onSubmit={data => setData(data)}
+          onSubmit={data => {
+            console.log(data)
+            setData(data)
+          }}
         />
       )}
       right={() => <FormSummary id={id} className="border p-4" />}
+      output={() => <p>{JSON.stringify(data)}</p>}
     />
   )
 }
