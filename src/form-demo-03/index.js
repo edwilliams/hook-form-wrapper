@@ -13,8 +13,13 @@ const FormDemo = () => {
         <Form
           id={id}
           validation={{
-            description: Joi.string().max(10).required(),
-            question: Joi.string().required()
+            description: Joi.string().max(10).required().messages({
+              'string.empty': 'Please complete description',
+              'string.max': 'Max length is {#limit}'
+            }),
+            question: Joi.string().required().messages({
+              'string.empty': 'Please complete question'
+            })
           }}
           inputs={[
             {
@@ -26,14 +31,11 @@ const FormDemo = () => {
               label: 'Question'
             }
           ]}
-          onSubmit={data => {
-            console.log(data)
-            setData(data)
-          }}
+          onSubmit={data => setData(data)}
         />
       )}
       right={() => <FormSummary id={id} className="border p-4" />}
-      output={() => <p>{JSON.stringify(data)}</p>}
+      output={() => <p className="font-mono">{JSON.stringify(data, null, 2)}</p>}
     />
   )
 }

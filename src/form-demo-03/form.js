@@ -21,7 +21,11 @@ export const Form = ({ id, inputs, validation, className, onSubmit }) => {
     names: inputs.map(({ name }) => name)
   }
 
-  const submit = handleSubmit(({ value, error }) => onSubmit({ value, error: error.details }))
+  const submit = handleSubmit(({ value, error }) => {
+    // todo: if we use JOI we should add errors to the inputs array
+    // so it behaved as per RHF
+    onSubmit({ value: value, error: error?.details })
+  })
 
   return (
     <form data-id={id} className={cx('', className)} onSubmit={submit}>
@@ -44,8 +48,6 @@ export const FormSummary = ({ id, className }) => {
   const click = () => {
     submitIds[id].ref.current.click()
   }
-
-  // console.log(submitIds[id].names)
 
   return (
     <div data-id={id} className={cx('', className)}>
