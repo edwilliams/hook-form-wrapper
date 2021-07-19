@@ -1,5 +1,5 @@
-import { validateSync, validateAsync } from './utils'
 import { useState } from 'react'
+import { validateSync, validateAsync } from '../utils'
 import { formId, Form, FormSummary } from './form'
 import Layout from '../components/layout'
 
@@ -20,7 +20,7 @@ const FormDemo = () => {
               opts: {
                 required: { value: true, message: 'Please complete description' },
                 maxLength: { value: 10, message: 'Max length is 10' },
-                validate: validateAsync
+                validate: validateAsync({ message: 'some message here' })
               }
             },
             {

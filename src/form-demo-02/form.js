@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import cx from 'classnames'
-// import Input from '../components/input'
 
 import { v4 as uuidv4 } from 'uuid'
 
