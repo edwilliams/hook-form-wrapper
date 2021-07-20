@@ -2,7 +2,24 @@ import { useState } from 'react'
 import { Input } from './components'
 import Layout from '../components/layout'
 import { Form, formId, FormSummary } from './form'
-// import { validateSync, validateAsync } from '../utils'
+import { useController } from 'react-hook-form'
+
+import { TextField } from '@material-ui/core'
+
+function InputWrapped({ control, name }) {
+  const {
+    field: { ref, ...inputProps }
+    // fieldState: { invalid, isTouched, isDirty },
+    // formState: { touchedFields, dirtyFields }
+  } = useController({
+    name,
+    control,
+    // rules: { required: true },
+    defaultValue: ''
+  })
+
+  return <TextField {...inputProps} inputRef={ref} />
+}
 
 export default function App() {
   const [data, setData] = useState()
@@ -21,12 +38,12 @@ export default function App() {
               // validate: validateSync({ message: 'some message here' })
             }}
           />
-          <Input
+          <InputWrapped
             name="question"
             label="Question"
-            opts={{
-              required: { value: true, message: 'Please complete question' }
-            }}
+            // opts={{
+            //   required: { value: true, message: 'Please complete question' }
+            // }}
           />
         </Form>
       )}
