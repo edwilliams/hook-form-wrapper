@@ -1,5 +1,7 @@
 import { useController } from 'react-hook-form'
-import RollUp from '../components/input-rollup'
+// import RollUp from '../components/input-rollup'
+import { Input as InputAntD } from 'antd'
+import 'antd/lib/input/style/index.css'
 
 export function Input({ register, label, name, opts, errors = {}, ...rest }) {
   return (
@@ -38,7 +40,8 @@ export function InputWrapped({ control, label, name, opts, errors }) {
     <div>
       <label>{label}</label>
       <br />
-      <RollUp.Input {...field} />
+      {/* <RollUp.Input {...field} /> */}
+      <InputAntD {...field} />
       {errors.message && <p className="text-red-500">Error: {errors.message}</p>}
     </div>
   )
