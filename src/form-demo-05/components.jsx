@@ -3,12 +3,12 @@ import { Input as InputAntD } from 'antd'
 import 'antd/lib/input/style/index.css'
 // import 'antd/lib/checkbox/style/index.css'
 
-export function Input({ register, label, name, opts, errors = {}, ...rest }) {
+export function Input({ register, label, name, rules, errors = {}, ...rest }) {
   return (
     <div>
       <label>{label}</label>
       <br />
-      <input className="border p-2" {...register(name, opts)} {...rest} />
+      <input className="border p-2" {...register(name, rules)} {...rest} />
       {errors.message && <p className="text-red-500">Error: {errors.message}</p>}
     </div>
   )
@@ -24,7 +24,7 @@ export function Select({ register, options, name, ...rest }) {
   )
 }
 
-export function InputWrapped({ control, label, name, opts, errors }) {
+export function InputWrapped({ control, label, name, rules, errors }) {
   const {
     field // i.e. { ref, name, value, onChange, onBlur }
     // fieldState: { invalid, isTouched, isDirty },
@@ -32,7 +32,7 @@ export function InputWrapped({ control, label, name, opts, errors }) {
   } = useController({
     name,
     control,
-    rules: opts,
+    rules: rules,
     defaultValue: ''
   })
 
@@ -46,7 +46,7 @@ export function InputWrapped({ control, label, name, opts, errors }) {
   )
 }
 
-// export function CheckboxWrapped({ control, label, name, opts, errors }) {
+// export function CheckboxWrapped({ control, label, name, rules, errors }) {
 //   const {
 //     field // i.e. { ref, name, value, onChange, onBlur }
 //     // fieldState: { invalid, isTouched, isDirty },
@@ -54,7 +54,7 @@ export function InputWrapped({ control, label, name, opts, errors }) {
 //   } = useController({
 //     name,
 //     control,
-//     rules: opts,
+//     rules: rules,
 //     defaultValue: ''
 //   })
 

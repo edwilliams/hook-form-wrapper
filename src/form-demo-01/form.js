@@ -10,11 +10,11 @@ const Form = ({ inputs, onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {inputs.map(({ name, label, opts = {} }, key) => {
+      {inputs.map(({ name, label, rules = {} }, key) => {
         return (
           <div key={key}>
             <label>{label}</label>
-            <input {...register(name, opts)} />
+            <input {...register(name, rules)} />
             {errors[name] && <p>Error: {errors[name].message}</p>}
           </div>
         )

@@ -14,7 +14,7 @@ export default function App() {
           <Input
             name="description"
             label="Description"
-            opts={{
+            rules={{
               required: { value: true, message: 'Please complete description' },
               maxLength: { value: 10, message: 'Max length is 10' }
               // validate: validateSync({ message: 'some message here' })
@@ -23,7 +23,7 @@ export default function App() {
           <InputWrapped
             name="question"
             label="Question"
-            opts={{
+            rules={{
               required: { value: true, message: 'Please complete question' }
             }}
           />

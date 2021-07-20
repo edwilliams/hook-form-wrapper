@@ -29,12 +29,12 @@ export const Form = ({ id, inputs, validation, className, onSubmit }) => {
 
   return (
     <form data-id={id} className={cx('', className)} onSubmit={submit}>
-      {inputs.map(({ name, label, opts = {} }, key) => {
+      {inputs.map(({ name, label, rules = {} }, key) => {
         return (
           <div key={key}>
             <label>{label}</label>
             <br />
-            <input {...register(name, opts)} className="border p-2" />
+            <input {...register(name, rules)} className="border p-2" />
             {/* {errors[name] && <p className="text-red-500">Error: {errors[name].message}</p>} */}
           </div>
         )

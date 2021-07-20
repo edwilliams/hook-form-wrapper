@@ -11,7 +11,7 @@ const FormDemo = () => {
           {
             name: 'description',
             label: 'Description',
-            opts: {
+            rules: {
               required: { value: true, message: 'Please complete description' },
               maxLength: { value: 10, message: 'Max length is 10' }
             }
@@ -19,7 +19,7 @@ const FormDemo = () => {
           {
             name: 'question',
             label: 'Question',
-            opts: {
+            rules: {
               required: { value: true, message: 'Please complete question' }
             }
           }
