@@ -1,5 +1,5 @@
 import { useController } from 'react-hook-form'
-import { TextField } from '@material-ui/core'
+import RollUp from '../components/input-rollup'
 
 export function Input({ register, label, name, opts, errors = {}, ...rest }) {
   return (
@@ -24,7 +24,7 @@ export function Select({ register, options, name, ...rest }) {
 
 export function InputWrapped({ control, label, name, opts, errors }) {
   const {
-    field: { ref, ...inputProps }
+    field // i.e. { ref, name, value, onChange, onBlur }
     // fieldState: { invalid, isTouched, isDirty },
     // formState: { touchedFields, dirtyFields }
   } = useController({
@@ -38,7 +38,7 @@ export function InputWrapped({ control, label, name, opts, errors }) {
     <div>
       <label>{label}</label>
       <br />
-      <TextField {...inputProps} inputRef={ref} />
+      <RollUp.Input {...field} />
       {errors.message && <p className="text-red-500">Error: {errors.message}</p>}
     </div>
   )

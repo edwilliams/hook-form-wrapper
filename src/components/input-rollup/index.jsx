@@ -1,6 +1,3 @@
-const global = window
-const process = { env: {} }
-
 import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
@@ -35,37 +32,17 @@ var Input = /*#__PURE__*/ forwardRef(function (_ref, ref) {
       type: type,
       defaultValue: defaultValue,
       value: value,
-      onFocus: function onFocus() {
-        return (
-          _onFocus &&
-          _onFocus({
-            name: name
-          })
-        )
+      onFocus: function onFocus(e) {
+        return _onFocus && _onFocus(e.target.value)
       },
-      onBlur: function onBlur() {
-        return (
-          _onBlur &&
-          _onBlur({
-            name: name
-          })
-        )
+      onBlur: function onBlur(e) {
+        return _onBlur && _onBlur(e.target.value)
       },
-      onClick: function onClick() {
-        return (
-          _onClick &&
-          _onClick({
-            name: name
-          })
-        )
+      onClick: function onClick(e) {
+        return _onClick && _onClick(e.target.value)
       },
-      onChange: function onChange() {
-        return (
-          _onChange &&
-          _onChange({
-            name: name
-          })
-        )
+      onChange: function onChange(e) {
+        return _onChange && _onChange(e.target.value)
       }
     })
   )
