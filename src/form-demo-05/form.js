@@ -26,12 +26,11 @@ export const Form = ({ id, defaultValues, children, onSubmit }) => {
               ...child.props,
               register,
               key: child.props.name,
-              errors: errors[child.props.name] || {}
+              errors: errors[child.props.name] || {},
+              control // review passing this in for controlled and uncontrolled comps
             }
 
-            console.log(child.props.name)
-            // techdebt
-            if (child.props.name === 'question') opts.control = control
+            // if (child.props.controlled) opts.control = control
 
             return child.props.name && typeof child.props.name === 'string'
               ? React.createElement(child.type, opts)
