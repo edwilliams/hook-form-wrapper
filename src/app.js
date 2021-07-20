@@ -1,4 +1,4 @@
-import FormDemo from './form-demo-05'
+import FormDemo from './form-demo-06'
 
 const App = () => {
   return (
