@@ -37,6 +37,30 @@ const FormDemo = () => {
       )}
       right={() => <FormSummary id={id} className="border p-4" />}
       output={() => <p className="font-mono">{JSON.stringify(data, null, 2)}</p>}
+      code={`
+      <Form
+        id={id}
+        validation={{
+          description: Joi.string().max(10).required().messages({
+            'string.empty': 'Please complete description',
+            'string.max': 'Max length is {#limit}'
+          }),
+          question: Joi.string().required().messages({
+            'string.empty': 'Please complete question'
+          })
+        }}
+        inputs={[
+          {
+            name: 'description',
+            label: 'Description'
+          },
+          {
+            name: 'question',
+            label: 'Question'
+          }
+        ]}
+        onSubmit={data => setData(data)}
+      />`}
     />
   )
 }

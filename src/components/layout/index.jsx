@@ -1,4 +1,4 @@
-const Layout = ({ title, left, right, output }) => {
+const Layout = ({ title, left, right, output, code }) => {
   return (
     <div className="">
       <h3 className="underline text-xl">{title}</h3>
@@ -9,6 +9,11 @@ const Layout = ({ title, left, right, output }) => {
         <div className="w-1/2">{right && right()}</div>
       </div>
       <div className="w-full">{output && output()}</div>
+      <xmp
+        dangerouslySetInnerHTML={{
+          __html: code
+        }}
+      />
     </div>
   )
 }

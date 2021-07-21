@@ -39,6 +39,32 @@ export default function App() {
       )}
       right={() => <FormSummary id={id} className="border p-4" />}
       output={() => <p>{JSON.stringify(data)}</p>}
+      code={`
+      <Form id={id} onSubmit={data => setData(data)}>
+        <Input
+          name="description"
+          label="Description"
+          rules={{
+            required: { value: true, message: 'Please complete description' },
+            maxLength: { value: 10, message: 'Max length is 10' }
+            // validate: validateSync({ message: 'some message here' })
+          }}
+        />
+        <InputWrapped
+          name="question"
+          label="Question"
+          rules={{
+            required: { value: true, message: 'Please complete question' }
+          }}
+        />
+        <CheckboxWrapped
+          name="somebox"
+          label="Some Box"
+          rules={{
+            required: { value: true, message: 'Please complete some box' }
+          }}
+        />
+      </Form>`}
     />
   )
 }

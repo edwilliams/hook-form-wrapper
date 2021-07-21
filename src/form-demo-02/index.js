@@ -40,6 +40,32 @@ const FormDemo = () => {
       )}
       right={() => <FormSummary id={id} className="border p-4" />}
       output={() => <p>{JSON.stringify(data)}</p>}
+      code={`
+        <Form
+          id={id}
+          inputs={[
+            {
+              name: 'description',
+              label: 'Description',
+              rules: {
+                required: { value: true, message: 'Please complete description' },
+                maxLength: { value: 10, message: 'Max length is 10' },
+                validate: validateAsync({ message: 'some message here' })
+              }
+            },
+            {
+              name: 'question',
+              label: 'Question',
+              rules: {
+                required: { value: true, message: 'Please complete question' }
+              }
+            }
+          ]}
+          onSubmit={data => {
+            console.log(data)
+            setData(data)
+          }}
+        />`}
     />
   )
 }
