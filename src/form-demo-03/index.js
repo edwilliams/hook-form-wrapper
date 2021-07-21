@@ -9,6 +9,7 @@ const FormDemo = () => {
   const id = formId()
   return (
     <Layout
+      title="RHF using JOI for validation"
       left={() => (
         <Form
           id={id}

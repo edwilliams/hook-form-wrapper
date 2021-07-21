@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { validateSync, validateAsync } from '../utils'
+import { validateAsync } from '../utils'
 import { formId, Form, FormSummary } from './form'
 import Layout from '../components/layout'
 
@@ -10,6 +10,7 @@ const FormDemo = () => {
   const id = formId()
   return (
     <Layout
+      title="RHF using async validation error"
       left={() => (
         <Form
           id={id}

@@ -9,6 +9,7 @@ export default function App() {
 
   return (
     <Layout
+      title="RHF using 'smart components' - uncontrolled and controlled (Ant Design)... w/ Checkbox"
       left={() => (
         <Form id={id} onSubmit={data => setData(data)}>
           <Input

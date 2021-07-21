@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import cx from 'classnames'
 
@@ -12,9 +12,7 @@ export const Form = ({ id, inputs, className, onSubmit }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    getValues,
-    ...rest
+    formState: { errors }
   } = useForm()
 
   console.log(errors)

@@ -6,6 +6,8 @@ const FormDemo = () => {
   const [data, setData] = useState()
   return (
     <div>
+      <h3 className="underline text-xl">Simple React Hook Form (RHF) Demo</h3>
+      <hr className="mt-4" />
       <Form
         inputs={[
           {

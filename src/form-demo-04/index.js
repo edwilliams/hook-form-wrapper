@@ -10,6 +10,7 @@ export default function App() {
 
   return (
     <Layout
+      title="RHF using 'smart components' - all uncontrolled"
       left={() => (
         <Form id={id} onSubmit={data => setData(data)}>
           <Input
@@ -18,7 +19,6 @@ export default function App() {
             rules={{
               required: { value: true, message: 'Please complete description' },
               maxLength: { value: 10, message: 'Max length is 10' }
-              // validate: validateSync({ message: 'some message here' })
             }}
           />
           <Input

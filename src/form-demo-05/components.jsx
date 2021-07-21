@@ -32,7 +32,7 @@ export function InputWrapped({ control, label, name, rules, errors }) {
   } = useController({
     name,
     control,
-    rules: rules,
+    rules,
     defaultValue: ''
   })
 
