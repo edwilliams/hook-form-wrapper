@@ -1,5 +1,5 @@
 import { useController } from 'react-hook-form'
-import { Input as InputAntD, Checkbox } from 'antd'
+import { Checkbox } from 'antd'
 import 'antd/lib/input/style/index.css'
 import 'antd/lib/checkbox/style/index.css'
 
