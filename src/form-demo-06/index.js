@@ -18,7 +18,6 @@ export default function App() {
             rules={{
               required: { value: true, message: 'Please complete description' },
               maxLength: { value: 10, message: 'Max length is 10' }
-              // validate: validateSync({ message: 'some message here' })
             }}
           />
           <InputWrapped
@@ -47,7 +46,6 @@ export default function App() {
           rules={{
             required: { value: true, message: 'Please complete description' },
             maxLength: { value: 10, message: 'Max length is 10' }
-            // validate: validateSync({ message: 'some message here' })
           }}
         />
         <InputWrapped

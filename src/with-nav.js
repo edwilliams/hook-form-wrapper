@@ -9,6 +9,7 @@ const Menu = ({ children }) => (
       <NavLink to={'/04'}>04</NavLink>
       <NavLink to={'/05'}>05</NavLink>
       <NavLink to={'/06'}>06</NavLink>
+      <NavLink to={'/07'}>07</NavLink>
     </div>
     {children}
   </div>
