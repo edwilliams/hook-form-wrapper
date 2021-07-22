@@ -1,7 +1,7 @@
 import { useController } from 'react-hook-form'
-import { Input as InputAntD } from 'antd'
+import { Checkbox } from 'antd'
 import 'antd/lib/input/style/index.css'
-// import 'antd/lib/checkbox/style/index.css'
+import 'antd/lib/checkbox/style/index.css'
 
 export function Input({ register, label, name, rules, errors = {}, ...rest }) {
   return (
@@ -14,7 +14,7 @@ export function Input({ register, label, name, rules, errors = {}, ...rest }) {
   )
 }
 
-export function InputWrapped({ control, label, name, rules, errors }) {
+export function CheckboxWrapped({ control, label, name, rules, errors, onChange }) {
   const {
     field // i.e. { ref, name, value, onChange, onBlur }
     // fieldState: { invalid, isTouched, isDirty },
@@ -22,7 +22,7 @@ export function InputWrapped({ control, label, name, rules, errors }) {
   } = useController({
     name,
     control,
-    rules,
+    rules: rules,
     defaultValue: ''
   })
 
@@ -30,30 +30,8 @@ export function InputWrapped({ control, label, name, rules, errors }) {
     <div>
       <label>{label}</label>
       <br />
-      <InputAntD {...field} />
+      <Checkbox {...field} onChange={onChange} />
       {errors.message && <p className="text-red-500">Error: {errors.message}</p>}
     </div>
   )
 }
-
-// export function CheckboxWrapped({ control, label, name, rules, errors }) {
-//   const {
-//     field // i.e. { ref, name, value, onChange, onBlur }
-//     // fieldState: { invalid, isTouched, isDirty },
-//     // formState: { touchedFields, dirtyFields }
-//   } = useController({
-//     name,
-//     control,
-//     rules: rules,
-//     defaultValue: ''
-//   })
-
-//   return (
-//     <div>
-//       <label>{label}</label>
-//       <br />
-//       <Checkbox {...field} />
-//       {errors.message && <p className="text-red-500">Error: {errors.message}</p>}
-//     </div>
-//   )
-// }
