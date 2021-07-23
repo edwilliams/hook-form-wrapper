@@ -25,8 +25,6 @@ export default function App() {
 
   const id = formId()
 
-  console.log(inputs.length)
-
   return (
     <Layout
       title="Dynamically render new input"

@@ -9,6 +9,7 @@ import FormDemo06 from './form-demo-06'
 import FormDemo07 from './form-demo-07'
 import FormDemo08 from './form-demo-08'
 import FormDemo09 from './form-demo-09'
+import FormDemo10 from './form-demo-10'
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route exact path="/07" component={withNav(FormDemo07)} />
         <Route exact path="/08" component={withNav(FormDemo08)} />
         <Route exact path="/09" component={withNav(FormDemo09)} />
+        <Route exact path="/10" component={withNav(FormDemo10)} />
         <Redirect from="/" to="/01" />
       </Switch>
     </Router>
