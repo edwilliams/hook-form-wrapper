@@ -24,12 +24,10 @@ export const Form = ({ id, defaultValues, children, onSubmit }) => {
 
   submitIds[id].names = [] //names
 
-  // const _children = Array.isArray(children) ? children : [children]
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {React.Children.map(children, child => {
-        // console.log(child, errors)
+        if (!child) return
 
         const opts = {
           ...child.props,
@@ -38,8 +36,6 @@ export const Form = ({ id, defaultValues, children, onSubmit }) => {
           errors: errors[child.props.name] || {},
           control // review passing this in for controlled and uncontrolled comps
         }
-
-        console.log(opts)
 
         // if (child.props.controlled) opts.control = control
 

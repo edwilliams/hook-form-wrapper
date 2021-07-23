@@ -25,6 +25,8 @@ export default function App() {
 
   const id = formId()
 
+  console.log(inputs.length)
+
   return (
     <Layout
       title="Dynamically render new input"
@@ -33,22 +35,24 @@ export default function App() {
           {inputs.map(input => (
             <Input key={input.name} {...input} />
           ))}
-          <button
-            onClick={() => {
-              setInputs([
-                ...inputs,
-                {
-                  name: 'another',
-                  label: 'Another',
-                  rules: {
-                    required: { value: true, message: 'Please complete another' }
+          {inputs.length === 2 && (
+            <button
+              onClick={() => {
+                setInputs([
+                  ...inputs,
+                  {
+                    name: 'another',
+                    label: 'Another',
+                    rules: {
+                      required: { value: true, message: 'Please complete another' }
+                    }
                   }
-                }
-              ])
-            }}
-          >
-            click to create new input
-          </button>
+                ])
+              }}
+            >
+              click to create new input
+            </button>
+          )}
         </Form>
       )}
       right={() => <FormSummary id={id} className="border p-4" />}
