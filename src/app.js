@@ -12,6 +12,12 @@ import FormDemo09 from './form-demo-09'
 import FormDemo10 from './form-demo-10'
 
 const App = () => {
+  // return (
+  //   <div>
+  //     <FormDemo10 id="one" />
+  //     <FormDemo10 id="two" />
+  //   </div>
+  // )
   return (
     <Router>
       <Switch>

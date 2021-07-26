@@ -1,53 +1,58 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import cx from 'classnames'
 import { useForm } from 'react-hook-form'
 
+import useEventListener from '@use-it/event-listener'
+
 import { v4 as uuidv4 } from 'uuid'
 
-const handler = {
-  get: (target, prop) => target[prop] || {}
-}
-
-window.formProxy = new Proxy({}, handler)
+import { triggerFormChange } from './utils'
 
 export const formId = () => uuidv4()
 
+const store = {}
+
+/*
+NB this is happening for CustomEvents and for Proxy :-(
+Warning: Cannot update a component (`FormSummary`) while rendering a different component (`Form`).
+To locate the bad setState() call inside `Form`,
+follow the stack trace as described in https://reactjs.org/link/setstate-in-render
+*/
+
 export const Form = ({ id, defaultValues, children, onSubmit }) => {
-  const _form = useForm({ mode: 'all', defaultValues })
+  const _form = useForm({ defaultValues })
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    control
+    formState: { errors }
   } = _form
 
-  window.formProxy[id] = {
-    ref: useRef(),
-    _form,
-    // NB added watch means Proxy is updated via onKeyUp, rather than just via validation
-    values: _form.watch()
-  }
+  const ref = useRef()
+
+  const values = _form.watch()
+
+  useEffect(() => {
+    store[id] = { ref, values }
+    triggerFormChange()
+  }, [values])
 
   return (
-    <form data-id={id} onSubmit={handleSubmit(onSubmit)}>
-      {React.Children.map(children, child => {
-        if (!child) return
-
-        const opts = {
-          ...child.props,
-          register,
-          key: child.props.name,
-          errors: errors[child.props.name] || {},
-          control // review passing this in for controlled and uncontrolled comps
-        }
-
-        // if (child.props.controlled) opts.control = control
-
-        return child.props.name && typeof child.props.name === 'string'
-          ? React.createElement(child.type, opts)
-          : child
-      })}
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {Array.isArray(children)
+        ? children.map(child => {
+            return child.props.name && typeof child.props.name === 'string'
+              ? React.createElement(child.type, {
+                  ...{
+                    ...child.props,
+                    register,
+                    key: child.props.name,
+                    errors: errors[child.props.name] || {}
+                  }
+                })
+              : child
+          })
+        : children}
       <input type="submit" />
     </form>
   )
@@ -56,18 +61,16 @@ export const Form = ({ id, defaultValues, children, onSubmit }) => {
 export const FormSummary = ({ id, className }) => {
   const [data, setData] = useState({})
 
-  handler.set = (target, prop, value) => {
-    target[prop] = value
-    console.log(value.values)
-    setData(value.values)
-    return true
-  }
+  useEventListener('cmp-form-onchange', () => {
+    setData(store[id])
+  })
 
   return (
     <div data-id={id} className={cx('', className)}>
-      <p>summary</p>
-      <hr className="mb-2 mt-2" />
-      <p>{JSON.stringify(data)}</p>
+      {data && <p>{JSON.stringify(data.values)}</p>}
+      {/* <button className="border p-2 mt-2 cursor-pointer" onClick={() => data.ref.current.click()}>
+        submit
+      </button> */}
     </div>
   )
 }

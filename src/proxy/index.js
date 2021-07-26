@@ -2,14 +2,15 @@ import { useState } from 'react'
 import { Input } from './components'
 import Layout from '../components/layout'
 import { Form, formId, FormSummary } from './form'
+// import { validateSync, validateAsync } from '../utils'
 
-export default function App() {
+export default function App({ id }) {
   const [data, setData] = useState()
-  const id = formId()
+  // const id = formId()
 
   return (
     <Layout
-      title="Capture all form changes in FormSummary (CustomEvent)"
+      title="RHF using 'smart components' - all uncontrolled"
       left={() => (
         <Form id={id} onSubmit={data => setData(data)}>
           <Input
@@ -31,7 +32,6 @@ export default function App() {
       )}
       right={() => <FormSummary id={id} className="border p-4" />}
       output={() => <p>{JSON.stringify(data)}</p>}
-      code={``}
     />
   )
 }
