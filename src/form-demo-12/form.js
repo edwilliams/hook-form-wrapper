@@ -1,11 +1,7 @@
-import React, { useContext, useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Context } from './context'
-
-export const Form = ({ defaultValues, children, onSubmit }) => {
-  const { setData } = useContext(Context)
-
+export const Form = ({ defaultValues, children, onChange, onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -15,8 +11,15 @@ export const Form = ({ defaultValues, children, onSubmit }) => {
 
   const ref = useRef()
 
+  const values = watch()
+
+  useEffect(() => {
+    const bool = true // diff values against previous stored values
+    if (bool) onChange(values)
+  }, [values])
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} onChange={() => setData({ ref, values: watch() })}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       {Array.isArray(children)
         ? children.map(child => {
             return child.props.name && typeof child.props.name === 'string'
@@ -36,14 +39,7 @@ export const Form = ({ defaultValues, children, onSubmit }) => {
   )
 }
 
-export const FormSummary = () => {
-  const { data } = useContext(Context)
-  return (
-    <div>
-      {data.values && <p>{JSON.stringify(data.values)}</p>}
-      <button className="border p-2 mt-2 cursor-pointer" onClick={() => data.ref?.current.click()}>
-        submit
-      </button>
-    </div>
-  )
+export const FormSummary = ({ data }) => {
+  console.log({ data })
+  return <p>[check console]</p>
 }

@@ -1,4 +1,5 @@
 export function Input({ register, label, name, rules, errors = {}, ...rest }) {
+  // console.log(errors)
   return (
     <div>
       <label>{label}</label>
