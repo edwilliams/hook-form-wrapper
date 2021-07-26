@@ -10,12 +10,13 @@ import FormDemo07 from './form-demo-07'
 import FormDemo08 from './form-demo-08'
 import FormDemo09 from './form-demo-09'
 import FormDemo10 from './form-demo-10'
+import FormDemo11 from './form-demo-11'
 
 const App = () => {
   // return (
   //   <div>
-  //     <FormDemo10 id="one" />
-  //     <FormDemo10 id="two" />
+  //     <FormDemo11 id="one" />
+  //     <FormDemo11 id="two" />
   //   </div>
   // )
   return (
@@ -31,6 +32,7 @@ const App = () => {
         <Route exact path="/08" component={withNav(FormDemo08)} />
         <Route exact path="/09" component={withNav(FormDemo09)} />
         <Route exact path="/10" component={withNav(FormDemo10)} />
+        <Route exact path="/11" component={withNav(FormDemo11)} />
         <Redirect from="/" to="/01" />
       </Switch>
     </Router>
