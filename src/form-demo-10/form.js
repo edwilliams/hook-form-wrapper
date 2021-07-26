@@ -10,15 +10,6 @@ import { triggerFormChange } from './utils'
 
 export const formId = () => uuidv4()
 
-const store = {}
-
-/*
-NB this is happening for CustomEvents and for Proxy :-(
-Warning: Cannot update a component (`FormSummary`) while rendering a different component (`Form`).
-To locate the bad setState() call inside `Form`,
-follow the stack trace as described in https://reactjs.org/link/setstate-in-render
-*/
-
 export const Form = ({ id, defaultValues, children, onSubmit }) => {
   const _form = useForm({ defaultValues })
 
@@ -33,8 +24,7 @@ export const Form = ({ id, defaultValues, children, onSubmit }) => {
   const values = _form.watch()
 
   useEffect(() => {
-    store[id] = { ref, values }
-    triggerFormChange()
+    triggerFormChange({ id, ref, values })
   }, [values])
 
   return (
@@ -53,24 +43,31 @@ export const Form = ({ id, defaultValues, children, onSubmit }) => {
               : child
           })
         : children}
-      <input type="submit" />
+      <input style={{ display: 'none' }} ref={ref} type="submit" />
     </form>
   )
 }
 
 export const FormSummary = ({ id, className }) => {
-  const [data, setData] = useState({})
+  const [values, setValues] = useState({})
+  const [ref, setRef] = useState({})
 
-  useEventListener('cmp-form-onchange', () => {
-    setData(store[id])
+  useEventListener('cmp-form-onchange', ({ detail }) => {
+    if (detail.id === id) {
+      setValues(detail.values)
+      setRef(detail.ref)
+    }
   })
 
   return (
     <div data-id={id} className={cx('', className)}>
-      {data && <p>{JSON.stringify(data.values)}</p>}
-      {/* <button className="border p-2 mt-2 cursor-pointer" onClick={() => data.ref.current.click()}>
+      {values && <p>{JSON.stringify(values)}</p>}
+      <button
+        className="border p-2 mt-2 cursor-pointer"
+        onClick={() => ref.current && ref.current.click()}
+      >
         submit
-      </button> */}
+      </button>
     </div>
   )
 }
