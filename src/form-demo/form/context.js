@@ -7,7 +7,27 @@ export const FormContext = createContext({
 
 export const FormCtxProvider = ({ children }) => {
   const [state, setState] = useState({
-    data: {},
+    data: {
+      // title: 'Summary',
+      // sections: [
+      //   {
+      //     active: true,
+      //     name: 'Details',
+      //     fields: [
+      //       {
+      //         name: 'Name',
+      //         value: 'wobble',
+      //         errors: []
+      //       },
+      //       {
+      //         name: 'Description',
+      //         value: 'wibble'
+      //         // errors: ['Please complete Description', 'Max length is 10']
+      //       }
+      //     ]
+      //   }
+      // ]
+    },
     setData: data => {
       // NB better to use immer
       setState({ ...state, data })
