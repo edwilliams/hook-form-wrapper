@@ -1,15 +1,13 @@
 import { useState } from 'react'
 import { Input } from './components'
 import Layout from '../components/layout'
-import { Form, FormSummary } from './form'
-
-import { ContextProvider } from './context'
+import { Form, FormSummary, FormCtxProvider } from './form'
 
 export default function App() {
   const [data, setData] = useState()
 
   return (
-    <ContextProvider>
+    <FormCtxProvider>
       <Layout
         title="Capture all form changes in FormSummary (Context)"
         left={() => (
@@ -34,7 +32,7 @@ export default function App() {
         right={() => <FormSummary className="border p-4" />}
         output={() => <p>{JSON.stringify(data)}</p>}
         code={`
-        <ContextProvider>
+        <FormCtxProvider>
           <SomeLayout
             someWhere={() => (
               <Form onSubmit={data => setData(data)}>
@@ -57,9 +55,9 @@ export default function App() {
             )}
             someWhereElse={() => <FormSummary className="border p-4" />}
           />
-        </ContextProvider>     
+        </FormCtxProvider>     
         `}
       />
-    </ContextProvider>
+    </FormCtxProvider>
   )
 }

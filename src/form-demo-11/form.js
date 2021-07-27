@@ -1,10 +1,25 @@
-import React, { useContext, useRef } from 'react'
+import React, { createContext, useState, useContext, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Context } from './context'
+const FormContext = createContext({
+  data: { ref: {}, values: {} },
+  setData: () => {}
+})
+
+export const FormCtxProvider = ({ children }) => {
+  const [state, setState] = useState({
+    data: {},
+    setData: data => {
+      // NB better to use immer
+      setState({ ...state, data })
+    }
+  })
+
+  return <FormContext.Provider value={state}>{children}</FormContext.Provider>
+}
 
 export const Form = ({ defaultValues, children, onSubmit }) => {
-  const { setData } = useContext(Context)
+  const { setData } = useContext(FormContext)
 
   const {
     register,
@@ -37,7 +52,7 @@ export const Form = ({ defaultValues, children, onSubmit }) => {
 }
 
 export const FormSummary = () => {
-  const { data } = useContext(Context)
+  const { data } = useContext(FormContext)
   return (
     <div>
       {data.values && <p>{JSON.stringify(data.values)}</p>}
