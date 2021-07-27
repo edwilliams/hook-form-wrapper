@@ -31,7 +31,25 @@ export default function App() {
       )}
       right={() => <FormSummary id={id} className="border p-4" />}
       output={() => <p>{JSON.stringify(data)}</p>}
-      code={``}
+      code={`
+      <Form id={id} onSubmit={data => setData(data)}>
+        <Input
+          name="description"
+          label="Description"
+          rules={{
+            required: { value: true, message: 'Please complete description' },
+            maxLength: { value: 10, message: 'Max length is 10' }
+          }}
+        />
+        <Input
+          name="question"
+          label="Question"
+          rules={{
+            required: { value: true, message: 'Please complete question' }
+          }}
+        />
+      </Form>
+      `}
     />
   )
 }

@@ -1,5 +1,6 @@
-import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import { withNav } from './with-nav'
+import FormDemo from './form-demo'
 import FormDemo01 from './form-demo-01'
 import FormDemo02 from './form-demo-02'
 import FormDemo03 from './form-demo-03'
@@ -23,6 +24,7 @@ const App = () => {
   return (
     <Router>
       <Switch>
+        <Route exact path="/" component={FormDemo} />
         <Route exact path="/01" component={withNav(FormDemo01)} />
         <Route exact path="/02" component={withNav(FormDemo02)} />
         <Route exact path="/03" component={withNav(FormDemo03)} />
@@ -35,7 +37,6 @@ const App = () => {
         <Route exact path="/10" component={withNav(FormDemo10)} />
         <Route exact path="/11" component={withNav(FormDemo11)} />
         <Route exact path="/12" component={withNav(FormDemo12)} />
-        <Redirect from="/" to="/01" />
       </Switch>
     </Router>
   )
