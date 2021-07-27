@@ -1,9 +1,11 @@
-// import { useState } from 'react'
-import { Input, InputWrapped } from './components'
-import { Form, FormSummary, FormCtxProvider } from './form'
+import { useState } from 'react'
+import { Input } from './components'
+import { Form } from './form/form'
+import { FormSummary } from './form/summary'
+import { FormCtxProvider } from './form/context'
 
 export default function App() {
-  // const [data, setData] = useState()
+  const [data, setData] = useState()
 
   return (
     <FormCtxProvider>
@@ -11,13 +13,8 @@ export default function App() {
         <h3 className="text-xl">Details</h3>
         <hr className="mt-4 mb-4 border-blue-500" />
         <div className="flex justify-around">
-          <div className="w-1/2">
-            <Form
-              // onSubmit={data => setData(data)}
-              onSubmit={data => {
-                console.log(data)
-              }}
-            >
+          <div className="w-3/4 px-4">
+            <Form onSubmit={data => setData(data)}>
               <Input
                 name="name"
                 label="Name"
@@ -25,7 +22,7 @@ export default function App() {
                   required: { value: true, message: 'Please complete Name' }
                 }}
               />
-              <InputWrapped
+              <Input
                 name="description"
                 label="Description"
                 rules={{
@@ -36,9 +33,12 @@ export default function App() {
             </Form>
           </div>
 
-          <div className="w-1/2">
+          <div className="w-1/4 px-4">
             <FormSummary className="border p-4" />
           </div>
+        </div>
+        <div className="mt-4">
+          <code>{JSON.stringify(data)}</code>
         </div>
       </div>
     </FormCtxProvider>
