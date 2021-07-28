@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import { FormContext } from './context'
 
-export const Form = ({ defaultValues, children, onSubmit }) => {
+export const Form = ({ title, defaultValues, children, onSubmit }) => {
   const { setData } = useContext(FormContext)
 
   const {
@@ -16,26 +16,41 @@ export const Form = ({ defaultValues, children, onSubmit }) => {
 
   const ref = useRef()
 
+  const change = () => {
+    setData({
+      ref,
+      // values: watch(),
+      title
+      // todo: transform data here into sections (TDD)
+    })
+    console.log({
+      title,
+      sections: []
+    })
+  }
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} onChange={() => setData({ ref, values: watch() })}>
-      {Array.isArray(children)
-        ? children.map(child => {
-            const opts = {
-              ...child.props,
-              register,
-              key: child.props.name,
-              errors: errors[child.props.name] || {},
-              control // review passing this in for controlled and uncontrolled comps
-            }
+    <form onSubmit={handleSubmit(onSubmit)} onChange={change}>
+      {React.Children.map(children, child => {
+        if (!child) return
 
-            // if (child.props.controlled) opts.control = control
+        const opts = {
+          ...child.props,
+          register,
+          key: child.props.name,
+          errors: errors[child.props.name] || {},
+          control // review passing this in for controlled and uncontrolled comps
+        }
 
-            return child.props.name && typeof child.props.name === 'string'
-              ? React.createElement(child.type, opts)
-              : child
-          })
-        : children}
+        // if (child.props.controlled) opts.control = control
+
+        return child.props.name && typeof child.props.name === 'string'
+          ? React.createElement(child.type, opts)
+          : child
+      })}
       <input style={{ display: 'none' }} ref={ref} type="submit" />
     </form>
   )
 }
+
+export const FieldSet = ({ children }) => <fieldset>{children}</fieldset>

@@ -14,7 +14,7 @@ export default function App() {
         <hr className="mt-4 mb-4 border-blue-500" />
         <div className="flex justify-around">
           <div className="w-3/4 px-4">
-            <Form onSubmit={data => setData(data)}>
+            <Form title="Summary" onSubmit={data => setData(data)}>
               <Input
                 name="name"
                 label="Name"
