@@ -27,7 +27,7 @@ export default function App() {
                 label="Description"
                 rules={{
                   required: { value: true, message: 'Please complete Description' },
-                  maxLength: { value: 10, message: 'Max length is 10' }
+                  maxLength: { value: 5, message: 'Max length is 5' }
                 }}
               />
             </Form>

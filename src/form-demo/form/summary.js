@@ -17,16 +17,20 @@ export const FormSummary = () => {
 
           {fields.map(({ name, value, errors = [] }) => (
             <ul className="list-disc list-inside">
-              {errors.length === 0 ? (
-                <li className="mb-2">
-                  <span className="font-bold">{name}</span>
-                  <ul className="pl-5">
-                    <li>{value}</li>
+              <li className="mb-2">
+                <span className="font-bold">{name}</span>
+                {errors.length === 0 || errors.filter(({ show }) => show).length === 0 ? (
+                  <p className="pl-5">{value}</p>
+                ) : (
+                  <ul>
+                    {errors
+                      .filter(({ show }) => show)
+                      .map(({ desc }) => (
+                        <li className="mb-2 text-red-500 font-bold">⚠️ {desc}</li>
+                      ))}
                   </ul>
-                </li>
-              ) : (
-                errors.map(err => <p className="mb-2 text-red-500 font-bold">⚠️ {err}</p>)
-              )}
+                )}
+              </li>
             </ul>
           ))}
         </div>
@@ -34,7 +38,7 @@ export const FormSummary = () => {
 
       <hr />
 
-      <button className="block border p-2 mt-2 cursor-pointer" onClick={() => ref?.current.click()}>
+      <button className="block border p-2 mt-2 cursor-pointer" onClick={() => ref.current?.click()}>
         submit
       </button>
     </div>

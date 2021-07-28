@@ -1,10 +1,12 @@
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { FormContext } from './context'
+import { getSummaryData } from './utils'
 
 export const Form = ({ title, defaultValues, children, onSubmit }) => {
-  const { setData } = useContext(FormContext)
+  const { data, setData } = useContext(FormContext)
+  // const [rules, setRules] = useState([])
 
   const {
     register,
@@ -12,25 +14,34 @@ export const Form = ({ title, defaultValues, children, onSubmit }) => {
     formState: { errors },
     control,
     watch
-  } = useForm({ defaultValues })
+  } = useForm({ mode: 'all', criteriaMode: 'all', defaultValues })
 
   const ref = useRef()
 
-  const change = () => {
-    setData({
-      ref,
-      // values: watch(),
-      title
-      // todo: transform data here into sections (TDD)
-    })
-    console.log({
-      title,
-      sections: []
-    })
+  // NB here in case we need rules for FormSummary
+  // useEffect(() => {
+  //   const rules = React.Children.map(children, child => {
+  //     return { name: child.props.name, rules: child.props.rules }
+  //   })
+  //   setRules(rules)
+  // }, [])
+
+  const setSummaryData = () => {
+    // techdebt
+    setTimeout(() => {
+      setData({
+        ...data,
+        ...getSummaryData({ title, ref, children, errors, watch })
+      })
+    }, 100)
   }
 
+  useEffect(() => {
+    setSummaryData()
+  }, [])
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} onChange={change}>
+    <form onSubmit={handleSubmit(onSubmit)} onChange={setSummaryData}>
       {React.Children.map(children, child => {
         if (!child) return
 
