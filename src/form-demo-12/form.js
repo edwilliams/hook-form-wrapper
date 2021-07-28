@@ -16,6 +16,7 @@ export const Form = ({ defaultValues, children, onChange, onSubmit }) => {
   useEffect(() => {
     const bool = true // diff values against previous stored values
     if (bool) onChange(values)
+    // eslint-disable-next-line
   }, [values])
 
   return (

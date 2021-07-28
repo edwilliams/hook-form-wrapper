@@ -39,6 +39,7 @@ export const Form = ({ id, defaultValues, children, onSubmit }) => {
 }
 
 export const FormSummary = ({ id, className }) => {
+  // eslint-disable-next-line
   const [errors, setErrors] = useState([])
 
   const click = () => {

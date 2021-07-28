@@ -5,6 +5,7 @@ import { Form, FormSummary } from './form'
 
 export default function App() {
   const [data, setData] = useState()
+  // eslint-disable-next-line
   const [summary, setSummary] = useState()
 
   return (

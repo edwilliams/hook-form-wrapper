@@ -25,6 +25,7 @@ export const Form = ({ id, defaultValues, children, onSubmit }) => {
 
   useEffect(() => {
     triggerFormChange({ id, ref, values })
+    // eslint-disable-next-line
   }, [values])
 
   return (
