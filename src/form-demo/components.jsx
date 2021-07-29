@@ -1,9 +1,9 @@
-import { useController } from 'react-hook-form'
+import { useController, useFormContext } from 'react-hook-form'
 import { Input as InputAntD } from 'antd'
 import 'antd/lib/input/style/index.css'
 
-export const Input = ({ register, label, name, rules, errors = {}, ...rest }) => {
-  // console.log(register)
+export const Input = ({ label, name, rules, errors = {}, ...rest }) => {
+  const { register } = useFormContext()
   return (
     <div>
       <label>{label}</label>

@@ -16,7 +16,7 @@ export const FormSummary = () => {
           <h5 className={cx('mb-2', { ['text-blue-500']: true })}>{name}</h5>
 
           {fields.map(({ name, value, errors = [] }) => (
-            <ul className="list-disc list-inside">
+            <ul key={name} className="list-disc list-inside">
               <li className="mb-2">
                 <span className="font-bold">{name}</span>
                 {errors.length === 0 || errors.filter(({ show }) => show).length === 0 ? (
