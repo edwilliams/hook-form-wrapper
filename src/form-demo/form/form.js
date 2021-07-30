@@ -17,11 +17,11 @@ export const Form = ({ title, defaultValues, children, onSubmit }) => {
   const methods = useForm({ mode: 'all', defaultValues })
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
     control,
-    watch
+    watch,
+    setFocus
   } = methods
 
   const ref = useRef()
@@ -42,9 +42,10 @@ export const Form = ({ title, defaultValues, children, onSubmit }) => {
         ...getSummaryData({
           title,
           ref,
-          children, // React.Children.count(children) === 1 ? [children] : children, //React.Children.map((children, child) => child),
+          children,
           errors,
-          watch
+          watch,
+          onClickError: ({ name }) => setFocus(name)
         })
       })
     }, 100)
@@ -62,13 +63,9 @@ export const Form = ({ title, defaultValues, children, onSubmit }) => {
 
           const opts = {
             ...child.props,
-            register,
             key: child.props.name,
-            errors: errors[child.props.name] || {},
-            control // review passing this in for controlled and uncontrolled comps
+            control
           }
-
-          // if (child.props.controlled) opts.control = control
 
           return child.props.name && typeof child.props.name === 'string'
             ? React.createElement(child.type, opts)

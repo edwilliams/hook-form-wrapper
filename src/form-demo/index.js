@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { Input } from './components'
+import { Input, InputWrapped } from './components'
 import { Form, FormGroup } from './form/form'
 import { FormSummary } from './form/summary'
 import { FormCtxProvider } from './form/context'
+// import BigText from './big-text.jsx'
 
 // techdebt - using FormGroup prop to identify component
 export default function App() {
@@ -15,7 +16,7 @@ export default function App() {
           <div className="w-3/4 px-4">
             <Form title="Summary" onSubmit={data => setData(data)}>
               <FormGroup type="FormGroup" title="Details">
-                <Input
+                <InputWrapped
                   name="name"
                   label="Name"
                   rules={{
@@ -28,22 +29,19 @@ export default function App() {
                   rules={{
                     required: { value: true, message: 'Please complete Description' },
                     maxLength: { value: 5, message: 'Max length is 5' }
+                    // pattern: { value: /^\d+$/, message: 'Only numbers' }
                   }}
                 />
               </FormGroup>
-              <div>
-                <div>
-                  <FormGroup type="FormGroup" title="Questions">
-                    <Input
-                      name="colour"
-                      label="Colour"
-                      rules={{
-                        required: { value: true, message: 'Please complete Colour' }
-                      }}
-                    />
-                  </FormGroup>
-                </div>
-              </div>
+              <FormGroup type="FormGroup" title="Questions">
+                <Input
+                  name="colour"
+                  label="Colour"
+                  rules={{
+                    required: { value: true, message: 'Please complete Colour' }
+                  }}
+                />
+              </FormGroup>
             </Form>
           </div>
 
