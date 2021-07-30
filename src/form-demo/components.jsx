@@ -2,7 +2,7 @@ import { useController, useFormContext } from 'react-hook-form'
 import { Input as InputAntD } from 'antd'
 import 'antd/lib/input/style/index.css'
 
-export const Input = ({ label, name, rules, ...rest }) => {
+const InputUncontrolled = ({ label, name, rules, ...rest }) => {
   const {
     register,
     formState: { errors }
@@ -20,7 +20,29 @@ export const Input = ({ label, name, rules, ...rest }) => {
   )
 }
 
-export const InputWrapped = ({ control, label, name, rules }) => {
+export const Select = ({ label, name, rules, options, ...rest }) => {
+  const {
+    register,
+    formState: { errors }
+  } = useFormContext()
+
+  const error = errors[name]
+
+  return (
+    <div>
+      <label>{label}</label>
+      <br />
+      <select className="w-full border p-2" {...register(name, rules)} {...rest}>
+        {options.map(opt => (
+          <option>{opt}</option>
+        ))}
+      </select>
+      {error?.message && <p className="text-red-500">Error: {error?.message}</p>}
+    </div>
+  )
+}
+
+export const Input = ({ control, label, name, rules }) => {
   const {
     field, // i.e. { ref, name, value, onChange, onBlur }
     // fieldState: { invalid, isTouched, isDirty },

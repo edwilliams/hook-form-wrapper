@@ -79,7 +79,7 @@ export const Form = ({ title, defaultValues, children, onSubmit }) => {
 
 // NB element wrapping children may be div, fieldset or legend
 export const FormGroup = ({ title, children }) => (
-  <div data-title={title}>
+  <div className="mt-4" data-title={title}>
     <h3 className="text-xl">{title}</h3>
     <hr className="mt-4 mb-4 border-blue-500" />
     <div>{children}</div>

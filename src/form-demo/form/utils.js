@@ -30,11 +30,13 @@ const data ={
 */
 
 const mapRecursive = (children, callback) =>
-  React.Children.map(children, child =>
-    child.props.children
+  React.Children.map(children, child => {
+    return child === null
+      ? null
+      : child.props.children
       ? [callback(child), mapRecursive(child.props.children, callback)]
       : callback(child)
-  )
+  })
 
 const _getFormGroups = ({ children }) => {
   const _children = []
@@ -43,9 +45,6 @@ const _getFormGroups = ({ children }) => {
     _children.push(obj)
   })
 
-  // todo: we are only returning FormGroups, but we should also
-  // only be returning FormGroups with element containing a name prop
-  // i.e. currently errant elements will render a bullet point in the summary
   return _children.filter(child => child.props.type === 'FormGroup')
 }
 
@@ -66,16 +65,23 @@ export const getSummaryData = ({ title, ref, children, watch, errors = {}, onCli
   return {
     title,
     ref,
-    sections: _getFormGroups({ children }).map(({ props }) => ({
-      active: false,
-      name: props.title,
-      fields: React.Children.map(props.children, ({ props }) => ({
-        name: props.name,
-        label: props.label,
-        value: props.name ? watch(props.name) : '',
-        errors: _errors.filter(({ name }) => name === props.name),
-        onClickError
-      }))
-    }))
+    sections: _getFormGroups({ children }).map(({ props }) => {
+      const _children = props.children //.filter(React.isValidElement)
+      const fields = React.Children.map(_children, child => {
+        return {
+          name: child?.props.name,
+          label: child?.props.label,
+          value: child?.props.name ? watch(child?.props.name) : '',
+          errors: _errors.filter(({ name }) => name === child?.props.name),
+          onClickError
+        }
+      })
+
+      return {
+        active: false,
+        name: props.title,
+        fields: fields.filter(({ name }) => !!name)
+      }
+    })
   }
 }
