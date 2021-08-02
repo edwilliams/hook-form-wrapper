@@ -3,12 +3,14 @@ import { useContext } from 'react'
 
 import { FormContext } from './context'
 
-export const FormSummary = () => {
+export const FormSummary = ({ children }) => {
   const {
     data: { ref = {}, title, sections = [] }
   } = useContext(FormContext)
 
-  return (
+  return children ? (
+    children
+  ) : (
     <div>
       <h4 className="p-2 text-white bg-blue-500">{title}</h4>
       {sections.map(({ name, fields = [] }) => (

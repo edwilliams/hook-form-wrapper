@@ -26,12 +26,14 @@ export default function App() {
     { label: 'Time', name: 'time', options: ['', 'hours', 'minutes'] }
   ])
 
+  const smartSummary = true
+
   return (
     <FormCtxProvider>
       <div className="">
         <div className="flex justify-around">
           <div className="w-3/4 px-4">
-            <Form title="Summary" onSubmit={data => setData(data)}>
+            <Form title="Summary" showSubmit={!smartSummary} onSubmit={data => setData(data)}>
               <div>
                 <FormGroup type="FormGroup" title="Details">
                   <Input
@@ -58,6 +60,8 @@ export default function App() {
                   <Add
                     formIgnore
                     onClick={() => {
+                      // todo: trigger formsummary update here
+                      // needs more investigation
                       setTriggers([
                         ...triggers,
                         { label: 'Date', name: 'date', options: ['', 'weeks', 'months'] }
@@ -82,7 +86,13 @@ export default function App() {
           </div>
 
           <div className="w-1/4 px-4">
-            <FormSummary className="border p-4" />
+            {smartSummary ? (
+              <FormSummary className="border p-4" />
+            ) : (
+              <FormSummary className="border p-4">
+                <p>hello</p>
+              </FormSummary>
+            )}
           </div>
         </div>
         <div className="mt-4">

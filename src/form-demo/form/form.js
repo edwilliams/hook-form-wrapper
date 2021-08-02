@@ -10,7 +10,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { FormContext } from './context'
 import { getSummaryData } from './utils'
 
-export const Form = ({ title, defaultValues, children, onSubmit }) => {
+export const Form = ({ showSubmit, title, defaultValues, children, onSubmit }) => {
   const { data, setData } = useContext(FormContext)
   // const [rules, setRules] = useState([])
 
@@ -72,7 +72,7 @@ export const Form = ({ title, defaultValues, children, onSubmit }) => {
             ? React.createElement(child.type, opts)
             : child
         })}
-        <input style={{ display: 'none' }} ref={ref} type="submit" />
+        <input style={{ display: showSubmit ? 'block' : 'none' }} ref={ref} type="submit" />
       </form>
     </FormProvider>
   )
