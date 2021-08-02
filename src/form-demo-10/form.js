@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import cx from 'classnames'
 import { useForm } from 'react-hook-form'
 
-import useEventListener from '@use-it/event-listener'
+import useEventListener from '../utils/use-listener' //'@use-it/event-listener'
 
 import { v4 as uuidv4 } from 'uuid'
 
