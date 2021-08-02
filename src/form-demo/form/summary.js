@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import cx from 'classnames'
+// import cx from 'classnames'
 
 import { FormContext } from './context'
 
@@ -14,9 +14,15 @@ export const FormSummary = () => {
       {sections.map(({ name, fields = [] }) => (
         <div
           key={name}
-          className={cx('p-2', { ['border-l-2 border-blue-500']: true }, { ['border']: !true })}
+          // className={cx('p-2', { ['border-l-2 border-blue-500']: true }, { ['border']: !true })}
+          className="p-2 border-l-2 border-blue-500"
         >
-          <h5 className={cx('mb-2', { ['text-blue-500']: true })}>{name}</h5>
+          <h5
+            // className={cx('mb-2', { ['text-blue-500']: true })}
+            className="mb-2 text-blue-500"
+          >
+            {name}
+          </h5>
 
           {fields.map(({ name, label, value, errors = [], onClickError }) => (
             <ul key={name} className="list-disc list-inside">

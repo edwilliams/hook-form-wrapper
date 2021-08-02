@@ -53,6 +53,7 @@ export const Form = ({ title, defaultValues, children, onSubmit }) => {
 
   useEffect(() => {
     setSummaryData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
