@@ -99,6 +99,9 @@ export default function App() {
                       setQuery(query)
                       setImmutableTree(immutableTree)
                     }}
+                    validations={{
+                      String: val => val.length < 5
+                    }}
                     rules={{
                       validate: validateWithQuery({ query, message: 'Please complete a query' })
                       // validate: validateWithBool({

@@ -43,7 +43,7 @@ export const Input = ({ control, label, name, rules }) => {
 }
 
 export const QueryBuilderWrapped = {
-  Component: ({ name, rules, metaPayload, immutableTree, query, onChange }) => {
+  Component: ({ name, rules, metaPayload, immutableTree, query, validations, onChange }) => {
     const {
       register,
       formState: { errors }
@@ -55,12 +55,12 @@ export const QueryBuilderWrapped = {
       <div>
         <input
           type="text"
-          // style={{ display: 'block', width: '100%' }}
           style={{ display: 'none' }}
           value={JSON.stringify(query)}
           {...register(name, rules)}
         />
         <QueryBuilder.Component
+          validations={validations}
           metaPayload={metaPayload}
           immutableTree={immutableTree}
           onChange={onChange}

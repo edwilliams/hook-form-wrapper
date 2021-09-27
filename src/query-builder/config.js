@@ -4,7 +4,7 @@ import { Select, Input, Switch } from 'antd'
 
 import { convertMetaToFields } from './library/meta'
 
-const getConfig = ({ operators = {}, readonly, meta }) => {
+const getConfig = ({ operators = {}, readonly, meta, validations }) => {
   const operatorKeys = {
     is_null: operators.is_null || 'is_null',
     is_not_null: operators.is_not_null || 'is_not_null',
@@ -174,14 +174,10 @@ const getConfig = ({ operators = {}, readonly, meta }) => {
       showErrorMessage: true,
       renderSize: 'middle',
       renderField: readonly
-        ? ({ selectedLabel }) => (
-            <Select defaultValue={selectedLabel} disabled />
-          )
+        ? ({ selectedLabel }) => <Select defaultValue={selectedLabel} disabled />
         : AntdConfig.settings.renderField,
       renderOperator: readonly
-        ? ({ selectedLabel }) => (
-            <Select defaultValue={selectedLabel} disabled />
-          )
+        ? ({ selectedLabel }) => <Select defaultValue={selectedLabel} disabled />
         : AntdConfig.settings.renderOperator
     },
     operators: _operators,
@@ -219,7 +215,7 @@ const getConfig = ({ operators = {}, readonly, meta }) => {
         : AntdConfig.widgets.boolean
     },
     types,
-    fields: convertMetaToFields(meta)
+    fields: convertMetaToFields({ meta, validations })
   }
 }
 

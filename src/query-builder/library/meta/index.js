@@ -1,4 +1,4 @@
-export const convertMetaToFields = meta => {
+export const convertMetaToFields = ({ meta, validations = {} }) => {
   const fields = {}
 
   meta.forEach(({ DisplayName, Type, Attribute, Values }) => {
@@ -9,7 +9,8 @@ export const convertMetaToFields = meta => {
         valueSources: ['value'],
         fieldSettings: {
           listValues: Values.map(({ Value }) => Value),
-          validateValue: val => true
+          validateValue: val =>
+            val && typeof validations.list === 'function' ? validations.list(val) : true
         }
       }
     } else if (Type === 'Int' || Type === 'Decimal') {
@@ -19,7 +20,8 @@ export const convertMetaToFields = meta => {
         valueSources: ['value'],
         preferWidgets: ['number'],
         fieldSettings: {
-          validateValue: val => true
+          validateValue: val =>
+            val && typeof validations.Int === 'function' ? validations.Int(val) : true
         }
       }
     } else if (Type === 'Boolean') {
@@ -29,7 +31,8 @@ export const convertMetaToFields = meta => {
         operators: ['equal'],
         valueSources: ['value'],
         fieldSettings: {
-          validateValue: val => true
+          validateValue: val =>
+            val && typeof validations.Boolean === 'function' ? validations.Boolean(val) : true
         }
       }
     } else if (Type === 'DateTime') {
@@ -37,7 +40,8 @@ export const convertMetaToFields = meta => {
         label: DisplayName,
         type: 'datetime',
         fieldSettings: {
-          validateValue: val => true
+          validateValue: val =>
+            val && typeof validations.DateTime === 'function' ? validations.DateTime(val) : true
         }
       }
       // default is String
@@ -46,7 +50,8 @@ export const convertMetaToFields = meta => {
         label: DisplayName,
         type: 'text',
         fieldSettings: {
-          validateValue: val => val.length < 5
+          validateValue: val =>
+            val && typeof validations.String === 'function' ? validations.String(val) : true
         }
       }
     }
