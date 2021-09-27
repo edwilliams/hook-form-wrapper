@@ -1,30 +1,31 @@
 import { useState } from 'react'
-import { Input, Select } from './components'
+import { Button, Input, QueryBuilderWrapped } from './components'
 import { Form, FormGroup } from './form/form'
 import { FormSummary } from './form/summary'
 import { FormCtxProvider } from './form/context'
 // import BigText from './big-text'
 
-const Add = ({ onClick }) => {
-  return (
-    <button
-      onClick={e => {
-        e.preventDefault() // prevent form submission
-        onClick(123)
-      }}
-    >
-      add trigger
-    </button>
-  )
-}
+import {
+  // validateWithBool
+  validateWithQuery
+} from './utils'
 
 // techdebt - using FormGroup prop to identify component
-// NB FormGroup children must be wrapped (e.g. <Add/>)
+// NB FormGroup children must be wrapped (e.g. <Button/>)
 export default function App() {
+  // storing data to demo form
   const [data, setData] = useState()
-  const [triggers, setTriggers] = useState([
-    { label: 'Time', name: 'time', options: ['', 'hours', 'minutes'] }
-  ])
+
+  // storing query to pass into validation
+  const [query, setQuery] = useState({
+    Operator: null,
+    Attribute: null,
+    Value: null
+  })
+
+  const [showQueryBuilder, setShowQueryBuilder] = useState(false)
+
+  const [immutableTree, setImmutableTree] = useState(QueryBuilderWrapped.getImmutableTree())
 
   const smartSummary = true
 
@@ -40,14 +41,20 @@ export default function App() {
                     name="name"
                     label="Name"
                     rules={{
-                      required: { value: true, message: 'Please complete Name' }
+                      required: {
+                        value: true,
+                        message: 'Please complete Name'
+                      }
                     }}
                   />
                   <Input
                     name="description"
                     label="Description"
                     rules={{
-                      required: { value: true, message: 'Please complete Description' },
+                      required: {
+                        value: true,
+                        message: 'Please complete Description'
+                      },
                       maxLength: { value: 5, message: 'Max length is 5' }
                       // pattern: { value: /^\d+$/, message: 'Only numbers' }
                     }}
@@ -55,32 +62,56 @@ export default function App() {
                 </FormGroup>
                 {/* <BigText /> */}
               </div>
-              <FormGroup type="FormGroup" title="Triggers">
-                {triggers.length === 1 ? (
-                  <Add
+
+              <FormGroup type="FormGroup" title="Query Builder">
+                {!showQueryBuilder ? (
+                  <Button
                     formIgnore
-                    onClick={() => {
-                      // todo: trigger formsummary update here
-                      // needs more investigation
-                      setTriggers([
-                        ...triggers,
-                        { label: 'Date', name: 'date', options: ['', 'weeks', 'months'] }
-                      ])
+                    onClick={() => setShowQueryBuilder(true)}
+                    text="Add Query Builder"
+                  />
+                ) : null}
+
+                <br />
+                <br />
+
+                {showQueryBuilder ? (
+                  <QueryBuilderWrapped.Component
+                    name="qb"
+                    label="Query Builder"
+                    query={query}
+                    metaPayload={[
+                      {
+                        Id: 1,
+                        DisplayName: 'Device AD Site Name',
+                        Type: 'String',
+                        Attribute: 'Fizz.String'
+                      },
+                      {
+                        Id: 2,
+                        DisplayName: 'Foo - Number',
+                        Type: 'Int',
+                        Attribute: 'Foo.Int'
+                      }
+                    ]}
+                    immutableTree={immutableTree}
+                    onChange={({ query, immutableTree }) => {
+                      setQuery(query)
+                      setImmutableTree(immutableTree)
+                    }}
+                    rules={{
+                      validate: validateWithQuery({ query, message: 'Please complete a query' })
+                      // validate: validateWithBool({
+                      //   bool:
+                      //     query !== undefined &&
+                      //     typeof query === 'object' &&
+                      //     query.Operator !== null &&
+                      //     query.Attribute !== null,
+                      //   message: 'Please complete a query'
+                      // })
                     }}
                   />
                 ) : null}
-                {triggers.map(trigger => (
-                  <Select {...trigger} />
-                ))}
-                {triggers.length === 2 && (
-                  <Input
-                    name="interval"
-                    label="Interval"
-                    rules={{
-                      required: { value: true, message: 'Please complete Interval' }
-                    }}
-                  />
-                )}
               </FormGroup>
             </Form>
           </div>
