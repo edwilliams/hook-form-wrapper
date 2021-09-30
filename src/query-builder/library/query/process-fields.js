@@ -19,7 +19,7 @@ const _store = () => {
 
 const store = _store()
 
-const _processRuleOperator = ({ allOperators, operator = '' }) => {
+const _processRuleOperator = ({ allOperators = {}, operator = '' }) => {
   return operator === 'equal' || operator === 'datetime_equal'
     ? '=='
     : operator === 'not_equal' || operator === 'datetime_not_equal'
@@ -103,8 +103,9 @@ export const processRuleFields = ({
 
 // ------------------------------------------------------------
 
-const lastCharPercent = (str = '') => str.split('')[str.length - 1] === '%'
-const firstCharPercent = (str = '') => str.split('')[0] === '%'
+const lastCharPercent = (str = '') =>
+  str && str.split('')[str.length - 1] === '%'
+const firstCharPercent = (str = '') => str && str.split('')[0] === '%'
 
 const _processLeafOperator = ({ _type, Operator = '', Value }) => {
   const str =

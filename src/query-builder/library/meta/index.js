@@ -2,7 +2,7 @@ export const convertMetaToFields = ({ meta, validations = {} }) => {
   const fields = {}
 
   meta.forEach(({ DisplayName, Type, Attribute, Values }) => {
-    if (Type === 'list') {
+    if (Type === 'List') {
       fields[Attribute] = {
         label: DisplayName,
         type: 'multiselect',
@@ -10,7 +10,9 @@ export const convertMetaToFields = ({ meta, validations = {} }) => {
         fieldSettings: {
           listValues: Values.map(({ Value }) => Value),
           validateValue: val =>
-            val && typeof validations.list === 'function' ? validations.list(val) : true
+            val && typeof validations.list === 'function'
+              ? validations.list(val)
+              : true
         }
       }
     } else if (Type === 'Int' || Type === 'Decimal') {
@@ -21,7 +23,9 @@ export const convertMetaToFields = ({ meta, validations = {} }) => {
         preferWidgets: ['number'],
         fieldSettings: {
           validateValue: val =>
-            val && typeof validations.Int === 'function' ? validations.Int(val) : true
+            val && typeof validations.Int === 'function'
+              ? validations.Int(val)
+              : true
         }
       }
     } else if (Type === 'Boolean') {
@@ -32,7 +36,9 @@ export const convertMetaToFields = ({ meta, validations = {} }) => {
         valueSources: ['value'],
         fieldSettings: {
           validateValue: val =>
-            val && typeof validations.Boolean === 'function' ? validations.Boolean(val) : true
+            val && typeof validations.Boolean === 'function'
+              ? validations.Boolean(val)
+              : true
         }
       }
     } else if (Type === 'DateTime') {
@@ -41,7 +47,9 @@ export const convertMetaToFields = ({ meta, validations = {} }) => {
         type: 'datetime',
         fieldSettings: {
           validateValue: val =>
-            val && typeof validations.DateTime === 'function' ? validations.DateTime(val) : true
+            val && typeof validations.DateTime === 'function'
+              ? validations.DateTime(val)
+              : true
         }
       }
       // default is String
@@ -51,7 +59,9 @@ export const convertMetaToFields = ({ meta, validations = {} }) => {
         type: 'text',
         fieldSettings: {
           validateValue: val =>
-            val && typeof validations.String === 'function' ? validations.String(val) : true
+            val && typeof validations.String === 'function'
+              ? validations.String(val)
+              : true
         }
       }
     }
@@ -70,7 +80,7 @@ const getType = ({ meta, attribute }) => {
     ? 'boolean'
     : Type === 'String'
     ? 'text'
-    : Type === 'list'
+    : Type === 'List'
     ? 'multiselect'
     : 'text'
 }

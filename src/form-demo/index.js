@@ -63,7 +63,7 @@ export default function App() {
                 {/* <BigText /> */}
               </div>
 
-              <FormGroup type="FormGroup" title="Query Builder">
+              <FormGroup type="FormGroup" title="Queries">
                 {!showQueryBuilder ? (
                   <Button
                     formIgnore
@@ -103,7 +103,10 @@ export default function App() {
                       String: val => val.length < 5
                     }}
                     rules={{
-                      validate: validateWithQuery({ query, message: 'Please complete a query' })
+                      validate: validateWithQuery({
+                        query,
+                        message: 'Please complete a query'
+                      })
                       // validate: validateWithBool({
                       //   bool:
                       //     query !== undefined &&

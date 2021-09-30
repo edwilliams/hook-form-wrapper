@@ -1,99 +1,9 @@
-export const values = {
-  payload: [
-    {
-      Id: 98,
-      Name: 'Adobe Products',
-      TypeId: 1,
-      TypeName: 'SoftwareTag',
-      Values: [
-        { Id: 4, Value: 'Illustrator', PropertyId: 1 },
-        { Id: 1, Value: 'Photoshop', PropertyId: 1 },
-        { Id: 2, Value: 'Acrobat', PropertyId: 1 }
-      ]
-    },
-    {
-      Id: 23,
-      Name: 'Deployment Groups',
-      TypeId: 1,
-      TypeName: 'DeviceTag',
-      Values: [
-        { Id: 5, Value: 'Group 1 (Test devices)', PropertyId: 2 },
-        { Id: 6, Value: 'Group 2 (IT Pilot devices)', PropertyId: 2 },
-        { Id: 7, Value: 'Group 3 (Pilot devices)', PropertyId: 2 },
-        { Id: 8, Value: 'Group 4 (non critical devices)', PropertyId: 2 },
-        { Id: 9, Value: 'Group 5 (critical devices)', PropertyId: 2 }
-      ]
-    }
-  ],
-  values: [
-    {
-      Attribute: 'DeviceTag.DeploymentGroups',
-      Values: [
-        'Group 1 (Test devices)',
-        'Group 2 (IT Pilot devices)',
-        'Group 3 (Pilot devices)',
-        'Group 4 (non critical devices)',
-        'Group 5 (critical devices)'
-      ]
-    },
-    {
-      Attribute: 'SoftwareTag.AdobeProducts',
-      Values: ['Illustrator', 'Photoshop', 'Acrobat']
-    }
-  ]
-}
-
-export const meta = {
-  meta: [
-    {
-      Id: 1,
-      DisplayName: 'Device AD Site Name',
-      Type: 'String',
-      Attribute: 'ReportDevice.ADSiteName'
-    },
-    {
-      Id: 23,
-      DisplayName: 'Deployment Groups',
-      Type: 'DeviceTag',
-      Attribute: 'DeviceTag.DeploymentGroups'
-    },
-    {
-      Id: 98,
-      DisplayName: 'Adobe Products',
-      Type: 'SoftwareTag',
-      Attribute: 'SoftwareTag.AdobeProducts'
-    }
-  ],
-  fields: {
-    'ReportDevice.ADSiteName': {
-      label: 'Device AD Site Name',
-      type: 'text'
-    },
-    'DeviceTag.DeploymentGroups': {
-      label: 'Deployment Groups',
-      type: 'multiselect',
-      valueSources: ['value'],
-      fieldSettings: {
-        listValues: []
-      }
-    },
-    'SoftwareTag.AdobeProducts': {
-      label: 'Adobe Products',
-      type: 'multiselect',
-      valueSources: ['value'],
-      fieldSettings: {
-        listValues: []
-      }
-    }
-  }
-}
-
 export const getQueries = ({ id = '123' } = {}) => ({
   '00': {
     nodeLeaf: {
-      Operator: 'like',
+      Operator: '==',
       Attribute: 'ReportDevice.ComputerName',
-      Value: '%1E%'
+      Value: '1E'
     },
     tree: {
       id,
@@ -103,7 +13,7 @@ export const getQueries = ({ id = '123' } = {}) => ({
           type: 'rule',
           properties: {
             field: 'ReportDevice.ComputerName',
-            operator: 'like',
+            operator: 'equal',
             value: ['1E'],
             valueSrc: ['value'],
             valueType: ['text']
@@ -117,9 +27,9 @@ export const getQueries = ({ id = '123' } = {}) => ({
       Operator: 'and',
       Operands: [
         {
-          Operator: 'like',
+          Operator: '==',
           Attribute: 'ReportDevice.ComputerName',
-          Value: '%1E%'
+          Value: '1E'
         },
         {
           Operator: '==',
@@ -136,7 +46,7 @@ export const getQueries = ({ id = '123' } = {}) => ({
           type: 'rule',
           properties: {
             field: 'ReportDevice.ComputerName',
-            operator: 'like',
+            operator: 'equal',
             value: ['1E'],
             valueSrc: ['value'],
             valueType: ['text']
@@ -165,9 +75,9 @@ export const getQueries = ({ id = '123' } = {}) => ({
           Value: '123'
         },
         {
-          Operator: 'like',
+          Operator: '==',
           Attribute: 'ReportDevice.ComputerName',
-          Value: '%comp%'
+          Value: 'comp'
         },
         {
           Operator: 'and',
@@ -204,7 +114,7 @@ export const getQueries = ({ id = '123' } = {}) => ({
           type: 'rule',
           properties: {
             field: 'ReportDevice.ComputerName',
-            operator: 'like',
+            operator: 'equal',
             value: ['comp'],
             valueSrc: ['value'],
             valueType: ['text']
@@ -251,9 +161,9 @@ export const getQueries = ({ id = '123' } = {}) => ({
           Value: 'comp-id-123'
         },
         {
-          Operator: 'like',
+          Operator: '==',
           Attribute: 'ReportDevice.ComputerName',
-          Value: '%comp-name%'
+          Value: 'comp-name'
         },
         {
           Operator: 'and',
@@ -300,7 +210,7 @@ export const getQueries = ({ id = '123' } = {}) => ({
           type: 'rule',
           properties: {
             field: 'ReportDevice.ComputerName',
-            operator: 'like',
+            operator: 'equal',
             value: ['comp-name'],
             valueSrc: ['value'],
             valueType: ['text']
@@ -373,9 +283,9 @@ export const getQueries = ({ id = '123' } = {}) => ({
               Value: 'dom-name'
             },
             {
-              Operator: 'like',
+              Operator: '==',
               Attribute: 'ReportDevice.ComputerName',
-              Value: '%comp-name%'
+              Value: 'comp-name'
             },
             {
               Operator: 'and',
@@ -445,7 +355,7 @@ export const getQueries = ({ id = '123' } = {}) => ({
               type: 'rule',
               properties: {
                 field: 'ReportDevice.ComputerName',
-                operator: 'like',
+                operator: 'equal',
                 value: ['comp-name'],
                 valueSrc: ['value'],
                 valueType: ['text']
@@ -530,9 +440,9 @@ export const getQueries = ({ id = '123' } = {}) => ({
               Value: 'dom-name'
             },
             {
-              Operator: 'like',
+              Operator: '==',
               Attribute: 'ReportDevice.ComputerName',
-              Value: '%comp-name%'
+              Value: 'comp-name'
             },
             {
               Operator: 'and',
@@ -612,7 +522,7 @@ export const getQueries = ({ id = '123' } = {}) => ({
               type: 'rule',
               properties: {
                 field: 'ReportDevice.ComputerName',
-                operator: 'like',
+                operator: 'equal',
                 value: ['comp-name'],
                 valueSrc: ['value'],
                 valueType: ['text']
@@ -715,9 +625,9 @@ export const getQueries = ({ id = '123' } = {}) => ({
               Value: 'dom-name'
             },
             {
-              Operator: 'like',
+              Operator: '==',
               Attribute: 'ReportDevice.ComputerName',
-              Value: '%comp-name%'
+              Value: 'comp-name'
             },
             {
               Operator: 'and',
@@ -807,7 +717,7 @@ export const getQueries = ({ id = '123' } = {}) => ({
               type: 'rule',
               properties: {
                 field: 'ReportDevice.ComputerName',
-                operator: 'like',
+                operator: 'equal',
                 value: ['comp-name'],
                 valueSrc: ['value'],
                 valueType: ['text']

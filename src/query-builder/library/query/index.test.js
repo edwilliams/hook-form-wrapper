@@ -3,6 +3,8 @@ import { convertTreeToNodeLeaf, convertNodeLeafToTree } from '../query'
 import { getQueries } from '../test-data'
 const data = getQueries()
 
+// NB not currently testing like, begins_with, ends_with
+
 describe('Convert "Node Leaf" state into React Awesome Query Builder "Tree" state', () => {
   test('00 level deep', () => {
     expect(

@@ -15,6 +15,7 @@ const QueryBuilder = ({
   metaPayload = [],
   immutableTree = null,
   operators = {},
+  operatorsAllowed = {},
   convertValue = null,
   validations,
   onChange
@@ -23,6 +24,7 @@ const QueryBuilder = ({
     readonly: readonly || disabled,
     meta: metaPayload,
     operators,
+    operatorsAllowed,
     validations
   })
 
@@ -31,14 +33,21 @@ const QueryBuilder = ({
     type: 'group'
   }
 
-  const initialQuery = QbUtils.checkTree(QbUtils.loadTree(_query), initialConfig)
+  const initialQuery = QbUtils.checkTree(
+    QbUtils.loadTree(_query),
+    initialConfig
+  )
 
   return (
     <>
       <GlobalAnt />
       <GlobalQueryBuilderStyles />
       <ScopedAnt>
-        <div className={readonly || disabled ? 'query-builder-wrapper-disabled' : ''}>
+        <div
+          className={
+            readonly || disabled ? 'query-builder-wrapper-disabled' : ''
+          }
+        >
           <Query
             {...initialConfig}
             value={immutableTree || initialQuery}

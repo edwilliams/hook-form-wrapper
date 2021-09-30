@@ -4,7 +4,13 @@ import { Select, Input, Switch } from 'antd'
 
 import { convertMetaToFields } from './library/meta'
 
-const getConfig = ({ operators = {}, readonly, meta, validations }) => {
+const getConfig = ({
+  operators = {},
+  operatorsAllowed = {},
+  readonly,
+  meta,
+  validations
+}) => {
   const operatorKeys = {
     is_null: operators.is_null || 'is_null',
     is_not_null: operators.is_not_null || 'is_not_null',
@@ -94,19 +100,18 @@ const getConfig = ({ operators = {}, readonly, meta, validations }) => {
         ...AntdConfig.types.text.widgets,
         text: {
           ...AntdConfig.types.text.widgets.text,
-          operators: [
-            'equal',
-            'not_equal',
-            'is_empty',
-            'is_not_empty',
-            // add operators to as may be custom (e.g. 'is null')
-            operatorKeys.begins_with,
-            operatorKeys.ends_with,
-            operatorKeys.is_null,
-            operatorKeys.is_not_null,
-            operatorKeys.like,
-            operatorKeys.not_like
-          ]
+          operators: operatorsAllowed.text
+            ? operatorsAllowed.text
+            : [
+                'equal',
+                'not_equal',
+                operatorKeys.begins_with,
+                operatorKeys.ends_with,
+                operatorKeys.is_null,
+                operatorKeys.is_not_null,
+                operatorKeys.like,
+                operatorKeys.not_like
+              ]
         }
       }
     },
@@ -116,17 +121,18 @@ const getConfig = ({ operators = {}, readonly, meta, validations }) => {
         ...AntdConfig.types.number.widgets,
         number: {
           ...AntdConfig.types.number.widgets.number,
-          operators: [
-            'equal',
-            'not_equal',
-            'less',
-            'less_or_equal',
-            'greater',
-            'greater_or_equal',
-            // add operators to as may be custom (e.g. 'is null')
-            operatorKeys.is_null,
-            operatorKeys.is_not_null
-          ]
+          operators: operatorsAllowed.number
+            ? operatorsAllowed.number
+            : [
+                'equal',
+                'not_equal',
+                'less',
+                'less_or_equal',
+                'greater',
+                'greater_or_equal',
+                operatorKeys.is_null,
+                operatorKeys.is_not_null
+              ]
         }
       }
     },
@@ -136,14 +142,16 @@ const getConfig = ({ operators = {}, readonly, meta, validations }) => {
         ...AntdConfig.types.datetime.widgets,
         datetime: {
           ...AntdConfig.types.datetime.widgets.datetime,
-          operators: [
-            'datetime_equal',
-            'datetime_not_equal',
-            'datetime_less',
-            'datetime_greater',
-            operatorKeys.is_null,
-            operatorKeys.is_not_null
-          ]
+          operators: operatorsAllowed.datetime
+            ? operatorsAllowed.datetime
+            : [
+                'datetime_equal',
+                'datetime_not_equal',
+                'datetime_less',
+                'datetime_greater',
+                operatorKeys.is_null,
+                operatorKeys.is_not_null
+              ]
         }
       }
     },
@@ -153,15 +161,14 @@ const getConfig = ({ operators = {}, readonly, meta, validations }) => {
         ...AntdConfig.types.multiselect.widgets,
         multiselect: {
           ...AntdConfig.types.multiselect.widgets.multiselect,
-          operators: [
-            'is_empty',
-            'is_not_empty',
-            // add operators to as may be custom (e.g. 'is null')
-            operatorKeys.in,
-            operatorKeys.not_in,
-            operatorKeys.is_null,
-            operatorKeys.is_not_null
-          ]
+          operators: operatorsAllowed.multiselect
+            ? operatorsAllowed.multiselect
+            : [
+                operatorKeys.in,
+                operatorKeys.not_in,
+                operatorKeys.is_null,
+                operatorKeys.is_not_null
+              ]
         }
       }
     }
@@ -174,10 +181,14 @@ const getConfig = ({ operators = {}, readonly, meta, validations }) => {
       showErrorMessage: true,
       renderSize: 'middle',
       renderField: readonly
-        ? ({ selectedLabel }) => <Select defaultValue={selectedLabel} disabled />
+        ? ({ selectedLabel }) => (
+            <Select defaultValue={selectedLabel} disabled />
+          )
         : AntdConfig.settings.renderField,
       renderOperator: readonly
-        ? ({ selectedLabel }) => <Select defaultValue={selectedLabel} disabled />
+        ? ({ selectedLabel }) => (
+            <Select defaultValue={selectedLabel} disabled />
+          )
         : AntdConfig.settings.renderOperator
     },
     operators: _operators,

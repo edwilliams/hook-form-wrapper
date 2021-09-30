@@ -48,7 +48,7 @@ export const Form = ({ showSubmit, title, defaultValues, children, onSubmit }) =
           onClickError: ({ name }) => setFocus(name)
         })
       })
-    }, 100)
+    }, 0)
   }
 
   useEffect(() => {
@@ -56,9 +56,14 @@ export const Form = ({ showSubmit, title, defaultValues, children, onSubmit }) =
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const submit = e => {
+    setSummaryData()
+    handleSubmit(onSubmit)(e)
+  }
+
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} onChange={setSummaryData}>
+      <form onSubmit={submit} onChange={setSummaryData}>
         {React.Children.map(children, child => {
           if (!child) return
 

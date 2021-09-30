@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useController, useFormContext } from 'react-hook-form'
 import { Input as InputAntD } from 'antd'
 import 'antd/lib/input/style/index.css'
@@ -17,6 +18,7 @@ export const Button = ({ text, onClick }) => {
     </button>
   )
 }
+
 export const Input = ({ control, label, name, rules }) => {
   const {
     field, // i.e. { ref, name, value, onChange, onBlur }
@@ -37,27 +39,34 @@ export const Input = ({ control, label, name, rules }) => {
       <label>{label}</label>
       <br />
       <InputAntD {...field} />
-      {error?.message && <p className="text-red-500">Error: {error?.message}</p>}
+      {error?.message && (
+        <p className="text-red-500">Error: {error?.message}</p>
+      )}
     </div>
   )
 }
 
-export const QueryBuilderWrapped = {
-  Component: ({ name, rules, metaPayload, immutableTree, query, validations, onChange }) => {
-    const {
-      register,
-      formState: { errors }
-    } = useFormContext()
+const QueryBuilderWrappedOne = {
+  Component: ({
+    name,
+    rules,
+    metaPayload,
+    immutableTree,
+    query,
+    validations,
+    onChange
+  }) => {
+    const { register, formState } = useFormContext()
 
-    const error = errors[name]
+    const error = formState.errors[name]
 
     return (
       <div>
         <input
-          type="text"
-          style={{ display: 'none' }}
-          value={JSON.stringify(query)}
           {...register(name, rules)}
+          type="text"
+          style={{ display: 'block', width: '100%' }}
+          value={JSON.stringify(query)}
         />
         <QueryBuilder.Component
           validations={validations}
@@ -65,9 +74,67 @@ export const QueryBuilderWrapped = {
           immutableTree={immutableTree}
           onChange={onChange}
         />
-        {error?.message && <p className="text-red-500">Error: {error?.message}</p>}
+        {error?.message && (
+          <p className="text-red-500">Error: {error?.message}</p>
+        )}
       </div>
     )
   },
   getImmutableTree: QueryBuilder.getImmutableTree
 }
+
+const QueryBuilderWrappedTwo = {
+  Component: ({
+    control,
+    label,
+    name,
+    rules,
+    validations,
+    metaPayload,
+    immutableTree,
+    onChange
+  }) => {
+    const [value, setValue] = useState('')
+
+    const {
+      field, // { ref, ...inputProps }
+      formState: { errors }
+    } = useController({
+      name,
+      control,
+      rules,
+      defaultValue: ''
+    })
+
+    const error = errors[name]
+
+    return (
+      <div>
+        <label>{label}</label>
+        <br />
+        <InputAntD {...field} value={value} />
+        <QueryBuilder.Component
+          validations={validations}
+          metaPayload={metaPayload}
+          immutableTree={immutableTree}
+          onChange={({ query, immutableTree }) => {
+            /*
+            problem...
+            QB validation is happening via an input
+            */
+            // console.log(query)
+            // console.log(field)
+            setValue(JSON.stringify(query))
+            onChange({ query, immutableTree })
+          }}
+        />
+        {error?.message && (
+          <p className="text-red-500">Error: {error?.message}</p>
+        )}
+      </div>
+    )
+  },
+  getImmutableTree: QueryBuilder.getImmutableTree
+}
+
+export const QueryBuilderWrapped = QueryBuilderWrappedTwo
