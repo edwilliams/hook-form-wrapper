@@ -7,6 +7,8 @@ import { FormContext } from './form/context'
 
 import QueryBuilder from '../query-builder'
 
+import { clone } from './utils'
+
 export const Button = ({ text, onClick }) => {
   return (
     <button
@@ -62,33 +64,56 @@ export const QueryBuilderWrapped = {
     const [initialised, setInitialised] = useState(false)
 
     useEffect(() => {
+      // updateSummary()
       if (!initialised) updateSummary()
     })
 
     const updateSummary = () => {
       if (!data.sections) return
-      console.log('load')
 
-      const section = data.sections?.find(
-        ({ name }) => name === formMeta.groupTitle
-      )
+      const sections = clone(data.sections)
 
-      if (section && !section.fields.some(fld => fld.name === formMeta.name)) {
-        section.fields.push({
-          name: formMeta.name,
-          label,
-          value: '',
-          errors: [
-            { name: formMeta.name, desc: 'Please complete Foo', show: true }
-          ]
-        })
-      }
-
-      // console.log('load', data.sections)
-
-      setData({
-        ...data
+      sections.forEach((section, i) => {
+        if (section.name === formMeta.groupTitle) {
+          console.log(123)
+          section.fields.push({
+            name: i, // formMeta.name,
+            label,
+            value: '',
+            errors: [
+              {
+                name: i /*formMeta.name*/,
+                desc: 'Please complete Foo',
+                show: true
+              }
+            ]
+          })
+        }
       })
+
+      console.log(sections)
+
+      // const section = sections?.find(({ name }) => name === formMeta.groupTitle)
+
+      // if (section && !section.fields.some(fld => fld.name === formMeta.name)) {
+      //   section.fields.push({
+      //     name: formMeta.name,
+      //     label,
+      //     value: '',
+      //     errors: [
+      //       { name: formMeta.name, desc: 'Please complete Foo', show: true }
+      //     ]
+      //   })
+      // }
+
+      // console.log(
+      //   'load',
+      //   section.fields.some(fld => fld.name === formMeta.name)
+      // )
+
+      // console.log({ key: 'sections', val: sections })
+
+      setData({ key: 'sections', val: sections })
 
       setInitialised(true)
     }
@@ -103,8 +128,6 @@ export const QueryBuilderWrapped = {
           immutableTree={immutableTree}
           formMeta={formMeta}
           onChange={({ query, immutableTree }) => {
-            // console.log('change', data.sections)
-            // updateSummary()
             onChange({ query, immutableTree })
           }}
           onError={val => {

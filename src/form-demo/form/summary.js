@@ -30,7 +30,8 @@ export const FormSummary = ({ children }) => {
             <ul key={name} className="list-disc list-inside">
               <li className="mb-2">
                 <span className="font-bold">{label}</span>
-                {errors.length === 0 || errors.filter(({ show }) => show).length === 0 ? (
+                {errors.length === 0 ||
+                errors.filter(({ show }) => show).length === 0 ? (
                   <p className="pl-5">{value}</p>
                 ) : (
                   <ul>
@@ -55,7 +56,10 @@ export const FormSummary = ({ children }) => {
 
       <hr />
 
-      <button className="block border p-2 mt-2 cursor-pointer" onClick={() => ref.current?.click()}>
+      <button
+        className="block border p-2 mt-2 cursor-pointer"
+        onClick={() => ref.current?.click()}
+      >
         submit
       </button>
     </div>

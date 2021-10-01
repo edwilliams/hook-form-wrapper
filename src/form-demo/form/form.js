@@ -50,12 +50,9 @@ export const Form = ({
         onClickError: ({ name }) => setFocus(name)
       })
 
-      setData({
-        ...data,
-        title,
-        ref,
-        sections
-      })
+      setData({ key: 'title', val: title })
+      setData({ key: 'ref', val: ref })
+      setData({ key: 'sections', val: sections })
     }, 0)
   }
 

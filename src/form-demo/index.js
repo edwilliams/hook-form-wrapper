@@ -9,7 +9,7 @@ import { FormCtxProvider } from './form/context'
 // NB FormGroup children must be wrapped (e.g. <Button/>)
 export default function App() {
   // storing data to demo form
-  const [data, setData] = useState()
+  const [demo, setDemo] = useState()
 
   const [showQueryBuilder, setShowQueryBuilder] = useState(false)
 
@@ -25,11 +25,7 @@ export default function App() {
       <div className="">
         <div className="flex justify-around">
           <div className="w-3/4 px-4">
-            <Form
-              title="Summary"
-              showSubmit={!smartSummary}
-              onSubmit={data => setData(data)}
-            >
+            <Form title="Summary" showSubmit={!smartSummary} onSubmit={setDemo}>
               <FormGroup type="FormGroup" title="Details">
                 <Input
                   name="name"
@@ -137,7 +133,7 @@ export default function App() {
           </div>
         </div>
         <div className="mt-4">
-          <code>{JSON.stringify(data)}</code>
+          <code>{JSON.stringify(demo)}</code>
         </div>
       </div>
     </FormCtxProvider>

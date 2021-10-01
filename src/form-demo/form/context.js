@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react'
-// import { produce } from 'immer'
+import { produce } from 'immer'
 
 export const FormContext = createContext({
   data: {},
@@ -8,14 +8,30 @@ export const FormContext = createContext({
 
 export const FormCtxProvider = ({ children }) => {
   const [state, setState] = useState({
-    data: {},
-    setData: data => {
-      // setState(
-      //   produce(draft => {
-      //     // console.log(draft, x)
-      //   })
-      // )
-      setState({ ...state, data })
+    data: {
+      ref: {},
+      title: '',
+      sections: [
+        // {
+        //   active: false,
+        //   name: 'FormGroup Title',
+        //   fields: [
+        //     {
+        //       name: 'form-component',
+        //       label: 'Form Component',
+        //       value: '',
+        //       errors: []
+        //     }
+        //   ]
+        // }
+      ]
+    },
+    setData: ({ key, val }) => {
+      setState(
+        produce(draft => {
+          draft.data[key] = val
+        })
+      )
     }
   })
 
