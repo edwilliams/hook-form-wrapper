@@ -9,7 +9,9 @@ const getConfig = ({
   operatorsAllowed = {},
   readonly,
   meta,
-  validations
+  validations,
+  formMeta,
+  onError
 }) => {
   const operatorKeys = {
     is_null: operators.is_null || 'is_null',
@@ -226,7 +228,7 @@ const getConfig = ({
         : AntdConfig.widgets.boolean
     },
     types,
-    fields: convertMetaToFields({ meta, validations })
+    fields: convertMetaToFields({ meta, validations, formMeta, onError })
   }
 }
 

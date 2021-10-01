@@ -55,7 +55,13 @@ and conditionally display them
 -------------------
 each section is a FormGroup
 */
-export const getSummaryData = ({ title, ref, children, watch, errors = {}, onClickError }) => {
+export const getSummaryData = ({
+  ref,
+  children,
+  watch,
+  errors = {},
+  onClickError
+}) => {
   const _errors = Object.entries(errors).map(err => ({
     name: err[0],
     desc: err[1].message,
@@ -63,7 +69,6 @@ export const getSummaryData = ({ title, ref, children, watch, errors = {}, onCli
   }))
 
   return {
-    title,
     ref,
     sections: _getFormGroups({ children }).map(({ props }) => {
       const _children = props.children //.filter(React.isValidElement)

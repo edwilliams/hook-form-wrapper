@@ -18,14 +18,18 @@ const QueryBuilder = ({
   operatorsAllowed = {},
   convertValue = null,
   validations,
-  onChange
+  formMeta,
+  onChange,
+  onError
 }) => {
   const initialConfig = getConfig({
     readonly: readonly || disabled,
     meta: metaPayload,
     operators,
     operatorsAllowed,
-    validations
+    validations,
+    formMeta,
+    onError
   })
 
   const _query = {

@@ -1,4 +1,9 @@
-export const convertMetaToFields = ({ meta, validations = {} }) => {
+export const convertMetaToFields = ({
+  meta,
+  validations = {},
+  formMeta,
+  onError
+}) => {
   const fields = {}
 
   meta.forEach(({ DisplayName, Type, Attribute, Values }) => {
@@ -9,10 +14,22 @@ export const convertMetaToFields = ({ meta, validations = {} }) => {
         valueSources: ['value'],
         fieldSettings: {
           listValues: Values.map(({ Value }) => Value),
-          validateValue: val =>
-            val && typeof validations.list === 'function'
-              ? validations.list(val)
-              : true
+          validateValue: val => {
+            const hasValidation = val && typeof validations.List === 'function'
+            if (hasValidation) {
+              const isValid = validations.List(val)
+              if (!isValid)
+                onError({
+                  formMeta,
+                  name: DisplayName,
+                  type: 'multiselect',
+                  value: val
+                })
+              return isValid
+            } else {
+              return true
+            }
+          }
         }
       }
     } else if (Type === 'Int' || Type === 'Decimal') {
@@ -22,10 +39,22 @@ export const convertMetaToFields = ({ meta, validations = {} }) => {
         valueSources: ['value'],
         preferWidgets: ['number'],
         fieldSettings: {
-          validateValue: val =>
-            val && typeof validations.Int === 'function'
-              ? validations.Int(val)
-              : true
+          validateValue: val => {
+            const hasValidation = val && typeof validations.Int === 'function'
+            if (hasValidation) {
+              const isValid = validations.Int(val)
+              if (!isValid)
+                onError({
+                  formMeta,
+                  name: DisplayName,
+                  type: 'number',
+                  value: val
+                })
+              return isValid
+            } else {
+              return true
+            }
+          }
         }
       }
     } else if (Type === 'Boolean') {
@@ -35,10 +64,23 @@ export const convertMetaToFields = ({ meta, validations = {} }) => {
         operators: ['equal'],
         valueSources: ['value'],
         fieldSettings: {
-          validateValue: val =>
-            val && typeof validations.Boolean === 'function'
-              ? validations.Boolean(val)
-              : true
+          validateValue: val => {
+            const hasValidation =
+              val && typeof validations.Boolean === 'function'
+            if (hasValidation) {
+              const isValid = validations.Boolean(val)
+              if (!isValid)
+                onError({
+                  formMeta,
+                  name: DisplayName,
+                  type: 'boolean',
+                  value: val
+                })
+              return isValid
+            } else {
+              return true
+            }
+          }
         }
       }
     } else if (Type === 'DateTime') {
@@ -46,10 +88,23 @@ export const convertMetaToFields = ({ meta, validations = {} }) => {
         label: DisplayName,
         type: 'datetime',
         fieldSettings: {
-          validateValue: val =>
-            val && typeof validations.DateTime === 'function'
-              ? validations.DateTime(val)
-              : true
+          validateValue: val => {
+            const hasValidation =
+              val && typeof validations.DateTime === 'function'
+            if (hasValidation) {
+              const isValid = validations.DateTime(val)
+              if (!isValid)
+                onError({
+                  formMeta,
+                  name: DisplayName,
+                  type: 'datetime',
+                  value: val
+                })
+              return isValid
+            } else {
+              return true
+            }
+          }
         }
       }
       // default is String
@@ -58,10 +113,23 @@ export const convertMetaToFields = ({ meta, validations = {} }) => {
         label: DisplayName,
         type: 'text',
         fieldSettings: {
-          validateValue: val =>
-            val && typeof validations.String === 'function'
-              ? validations.String(val)
-              : true
+          validateValue: val => {
+            const hasValidation =
+              val && typeof validations.String === 'function'
+            if (hasValidation) {
+              const isValid = validations.String(val)
+              if (!isValid)
+                onError({
+                  formMeta,
+                  name: DisplayName,
+                  type: 'text',
+                  value: val
+                })
+              return isValid
+            } else {
+              return true
+            }
+          }
         }
       }
     }

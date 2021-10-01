@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react'
+// import { produce } from 'immer'
 
 export const FormContext = createContext({
   data: {},
@@ -9,7 +10,11 @@ export const FormCtxProvider = ({ children }) => {
   const [state, setState] = useState({
     data: {},
     setData: data => {
-      // NB better to use immer
+      // setState(
+      //   produce(draft => {
+      //     // console.log(draft, x)
+      //   })
+      // )
       setState({ ...state, data })
     }
   })
