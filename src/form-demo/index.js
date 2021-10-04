@@ -50,6 +50,7 @@ export default function App() {
                   }}
                 />
               </FormGroup>
+
               {/* <BigText /> */}
 
               <FormGroup type="FormGroup" title="Queries">
@@ -65,58 +66,61 @@ export default function App() {
                 <br />
 
                 {true ? (
-                  <>
-                    <QueryBuilderWrapped.Component
-                      formMeta={{ name: 'qb-one', groupTitle: 'Queries' }}
-                      label="Query Builder One"
-                      metaPayload={[
-                        {
-                          Id: 1,
-                          DisplayName: 'Device AD Site Name',
-                          Type: 'String',
-                          Attribute: 'Fizz.String'
-                        },
-                        {
-                          Id: 2,
-                          DisplayName: 'Foo - Number',
-                          Type: 'Int',
-                          Attribute: 'Foo.Int'
-                        }
-                      ]}
-                      immutableTree={immutableTree}
-                      onChange={({ query, immutableTree }) => {
-                        // setImmutableTree(immutableTree)
-                      }}
-                      validations={{
-                        String: val => val.length < 5
-                      }}
-                    />
-                    <QueryBuilderWrapped.Component
-                      formMeta={{ name: 'qb-two', groupTitle: 'Queries' }}
-                      label="Query Builder Two"
-                      metaPayload={[
-                        {
-                          Id: 1,
-                          DisplayName: 'Device AD Site Name',
-                          Type: 'String',
-                          Attribute: 'Fizz.String'
-                        },
-                        {
-                          Id: 2,
-                          DisplayName: 'Foo - Number',
-                          Type: 'Int',
-                          Attribute: 'Foo.Int'
-                        }
-                      ]}
-                      immutableTree={immutableTree}
-                      onChange={({ query, immutableTree }) => {
-                        // setImmutableTree(immutableTree)
-                      }}
-                      validations={{
-                        String: val => val.length < 5
-                      }}
-                    />
-                  </>
+                  <QueryBuilderWrapped.Component
+                    formElementType="query-builder"
+                    name="qb-one"
+                    label="Query Builder One"
+                    metaPayload={[
+                      {
+                        Id: 1,
+                        DisplayName: 'Device AD Site Name',
+                        Type: 'String',
+                        Attribute: 'Fizz.String'
+                      },
+                      {
+                        Id: 2,
+                        DisplayName: 'Foo - Number',
+                        Type: 'Int',
+                        Attribute: 'Foo.Int'
+                      }
+                    ]}
+                    immutableTree={immutableTree}
+                    onChange={({ query, immutableTree }) => {
+                      // setImmutableTree(immutableTree)
+                    }}
+                    validations={{
+                      String: val => val.length < 5
+                    }}
+                  />
+                ) : null}
+
+                {true ? (
+                  <QueryBuilderWrapped.Component
+                    formElementType="query-builder"
+                    name="qb-two"
+                    label="Query Builder Two"
+                    metaPayload={[
+                      {
+                        Id: 1,
+                        DisplayName: 'Device AD Site Name',
+                        Type: 'String',
+                        Attribute: 'Fizz.String'
+                      },
+                      {
+                        Id: 2,
+                        DisplayName: 'Foo - Number',
+                        Type: 'Int',
+                        Attribute: 'Foo.Int'
+                      }
+                    ]}
+                    immutableTree={immutableTree}
+                    onChange={({ query, immutableTree }) => {
+                      // setImmutableTree(immutableTree)
+                    }}
+                    validations={{
+                      String: val => val.length < 5
+                    }}
+                  />
                 ) : null}
               </FormGroup>
             </Form>

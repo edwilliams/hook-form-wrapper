@@ -55,11 +55,11 @@ and conditionally display them
 -------------------
 each section is a FormGroup
 */
-export const getSummaryData = ({
-  ref,
+export const getSummarySections = ({
   children,
   watch,
   errors = {},
+  queryBuilderErrors = {},
   onClickError
 }) => {
   const _errors = Object.entries(errors).map(err => ({
@@ -68,25 +68,35 @@ export const getSummaryData = ({
     show: true
   }))
 
-  return {
-    ref,
-    sections: _getFormGroups({ children }).map(({ props }) => {
-      const _children = props.children //.filter(React.isValidElement)
-      const fields = React.Children.map(_children, child => {
-        return {
-          name: child?.props.name,
-          label: child?.props.label,
-          value: child?.props.name ? watch(child?.props.name) : '',
-          errors: _errors.filter(({ name }) => name === child?.props.name),
-          onClickError
-        }
-      })
+  const _queryBuilderErrors = Object.entries(queryBuilderErrors).map(err => ({
+    name: err[0],
+    desc: err[1].message,
+    show: true
+  }))
 
+  // techdebt: form elements must be children - not grandchildren - of FormGroup
+  return _getFormGroups({ children }).map(({ props }) => {
+    const _children = React.Children.toArray(props.children).filter(
+      ({ props }) => props.name
+    )
+
+    const fields = React.Children.map(_children, ({ props }) => {
       return {
-        active: false,
-        name: props.title,
-        fields: fields.filter(({ name }) => !!name)
+        name: props.name,
+        label: props.label,
+        value: props.name ? watch(props.name) : '',
+        errors:
+          props.formElementType === 'query-builder'
+            ? _queryBuilderErrors.filter(({ name }) => name === props.name)
+            : _errors.filter(({ name }) => name === props.name),
+        onClickError
       }
     })
-  }
+
+    return {
+      active: false,
+      name: props.title,
+      fields: fields.filter(({ name }) => !!name)
+    }
+  })
 }

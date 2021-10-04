@@ -1,14 +1,9 @@
-import React, {
-  useContext,
-  useEffect,
-  useRef
-  // useState
-} from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { FormContext } from './context'
-import { getSummaryData } from './utils'
+import { getSummarySections } from './utils'
 
 export const Form = ({
   showSubmit,
@@ -17,7 +12,7 @@ export const Form = ({
   children,
   onSubmit
 }) => {
-  const { data, setData } = useContext(FormContext)
+  const { setData } = useContext(FormContext)
   // const [rules, setRules] = useState([])
 
   const methods = useForm({ mode: 'all', defaultValues })
@@ -25,7 +20,6 @@ export const Form = ({
   const {
     handleSubmit,
     formState: { errors },
-    control,
     watch,
     setFocus
   } = methods
@@ -43,13 +37,15 @@ export const Form = ({
   const setSummaryData = () => {
     // techdebt
     setTimeout(() => {
-      const { sections } = getSummaryData({
+      const sections = getSummarySections({
         children,
         errors,
+        queryBuilderErrors: {
+          // 'qb-one': { message: 'There is an error with Query Builder One' }
+        },
         watch,
         onClickError: ({ name }) => setFocus(name)
       })
-
       setData({ key: 'title', val: title })
       setData({ key: 'ref', val: ref })
       setData({ key: 'sections', val: sections })
@@ -71,16 +67,7 @@ export const Form = ({
       <form onSubmit={submit} onChange={setSummaryData}>
         {React.Children.map(children, child => {
           if (!child) return
-
-          const opts = {
-            ...child.props,
-            key: child.props.name,
-            control
-          }
-
-          return child.props.name && typeof child.props.name === 'string'
-            ? React.createElement(child.type, opts)
-            : child
+          else return child
         })}
         <input
           style={{ display: showSubmit ? 'block' : 'none' }}

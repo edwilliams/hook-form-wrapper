@@ -1,13 +1,8 @@
-import { useEffect, useContext, useState } from 'react'
 import { useController } from 'react-hook-form'
 import { Input as InputAntD } from 'antd'
 import 'antd/lib/input/style/index.css'
 
-import { FormContext } from './form/context'
-
 import QueryBuilder from '../query-builder'
-
-import { clone } from './utils'
 
 export const Button = ({ text, onClick }) => {
   return (
@@ -59,65 +54,6 @@ export const QueryBuilderWrapped = {
     immutableTree,
     onChange
   }) => {
-    const { data, setData } = useContext(FormContext)
-
-    const [initialised, setInitialised] = useState(false)
-
-    useEffect(() => {
-      // updateSummary()
-      if (!initialised) updateSummary()
-    })
-
-    const updateSummary = () => {
-      if (!data.sections) return
-
-      const sections = clone(data.sections)
-
-      sections.forEach((section, i) => {
-        if (section.name === formMeta.groupTitle) {
-          console.log(123)
-          section.fields.push({
-            name: i, // formMeta.name,
-            label,
-            value: '',
-            errors: [
-              {
-                name: i /*formMeta.name*/,
-                desc: 'Please complete Foo',
-                show: true
-              }
-            ]
-          })
-        }
-      })
-
-      console.log(sections)
-
-      // const section = sections?.find(({ name }) => name === formMeta.groupTitle)
-
-      // if (section && !section.fields.some(fld => fld.name === formMeta.name)) {
-      //   section.fields.push({
-      //     name: formMeta.name,
-      //     label,
-      //     value: '',
-      //     errors: [
-      //       { name: formMeta.name, desc: 'Please complete Foo', show: true }
-      //     ]
-      //   })
-      // }
-
-      // console.log(
-      //   'load',
-      //   section.fields.some(fld => fld.name === formMeta.name)
-      // )
-
-      // console.log({ key: 'sections', val: sections })
-
-      setData({ key: 'sections', val: sections })
-
-      setInitialised(true)
-    }
-
     return (
       <div>
         <label>{label}</label>
