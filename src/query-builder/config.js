@@ -194,6 +194,7 @@ const getConfig = ({
         : AntdConfig.settings.renderOperator
     },
     operators: _operators,
+    // NB value, inside the factory, is undefined
     widgets: {
       ...AntdConfig.widgets,
       text: readonly

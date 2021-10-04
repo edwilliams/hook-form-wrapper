@@ -24,7 +24,8 @@ export const FormCtxProvider = ({ children }) => {
         //     }
         //   ]
         // }
-      ]
+      ],
+      queryBuilderErrors: {}
     },
     setData: ({ key, val }) => {
       setState(

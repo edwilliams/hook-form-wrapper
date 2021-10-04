@@ -12,7 +12,7 @@ export const Form = ({
   children,
   onSubmit
 }) => {
-  const { setData } = useContext(FormContext)
+  const { data, setData } = useContext(FormContext)
   // const [rules, setRules] = useState([])
 
   const methods = useForm({ mode: 'all', defaultValues })
@@ -40,9 +40,7 @@ export const Form = ({
       const sections = getSummarySections({
         children,
         errors,
-        queryBuilderErrors: {
-          // 'qb-one': { message: 'There is an error with Query Builder One' }
-        },
+        queryBuilderErrors: data.queryBuilderErrors,
         watch,
         onClickError: ({ name }) => setFocus(name)
       })

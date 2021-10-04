@@ -1,8 +1,12 @@
+import { useContext } from 'react'
 import { useController } from 'react-hook-form'
+import isEqual from 'lodash.isequal'
 import { Input as InputAntD } from 'antd'
 import 'antd/lib/input/style/index.css'
 
 import QueryBuilder from '../query-builder'
+
+import { FormContext } from './form/context'
 
 export const Button = ({ text, onClick }) => {
   return (
@@ -54,6 +58,8 @@ export const QueryBuilderWrapped = {
     immutableTree,
     onChange
   }) => {
+    const { data, setData } = useContext(FormContext)
+
     return (
       <div>
         <label>{label}</label>
@@ -66,8 +72,22 @@ export const QueryBuilderWrapped = {
           onChange={({ query, immutableTree }) => {
             onChange({ query, immutableTree })
           }}
-          onError={val => {
-            console.log(val)
+          // using setData in onError can cause infinite rendering
+          onError={({ name, value }) => {
+            const newErrors = {
+              ...data.queryBuilderErrors,
+              // todo: get name
+              'qb-one': {
+                message: `"${value}" is an incorrect value for "${name}"`
+              }
+            }
+            // todo: unset error
+            if (!isEqual(data.queryBuilderErrors, newErrors)) {
+              setData({
+                key: 'queryBuilderErrors',
+                val: newErrors
+              })
+            }
           }}
         />
 
