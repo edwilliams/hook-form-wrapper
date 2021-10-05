@@ -13,11 +13,6 @@ export default function App() {
 
   const [showQueryBuilder, setShowQueryBuilder] = useState(false)
 
-  const [
-    immutableTree
-    // setImmutableTree
-  ] = useState(QueryBuilderWrapped.getImmutableTree())
-
   const smartSummary = true
 
   return (
@@ -84,44 +79,36 @@ export default function App() {
                         Attribute: 'Foo.Int'
                       }
                     ]}
-                    immutableTree={immutableTree}
-                    onChange={({ query, immutableTree }) => {
-                      // setImmutableTree(immutableTree)
-                    }}
+                    immutableTree={QueryBuilderWrapped.getImmutableTree()}
                     validations={{
                       String: val => val.length < 5
                     }}
                   />
                 ) : null}
 
-                {true ? (
-                  <QueryBuilderWrapped.Component
-                    formElementType="query-builder"
-                    name="qb-two"
-                    label="Query Builder Two"
-                    metaPayload={[
-                      {
-                        Id: 1,
-                        DisplayName: 'Device AD Site Name',
-                        Type: 'String',
-                        Attribute: 'Fizz.String'
-                      },
-                      {
-                        Id: 2,
-                        DisplayName: 'Foo - Number',
-                        Type: 'Int',
-                        Attribute: 'Foo.Int'
-                      }
-                    ]}
-                    immutableTree={immutableTree}
-                    onChange={({ query, immutableTree }) => {
-                      // setImmutableTree(immutableTree)
-                    }}
-                    validations={{
-                      String: val => val.length < 5
-                    }}
-                  />
-                ) : null}
+                <QueryBuilderWrapped.Component
+                  formElementType="query-builder"
+                  name="qb-two"
+                  label="Query Builder Two"
+                  metaPayload={[
+                    {
+                      Id: 1,
+                      DisplayName: 'Device AD Site Name',
+                      Type: 'String',
+                      Attribute: 'Fizz.String'
+                    },
+                    {
+                      Id: 2,
+                      DisplayName: 'Foo - Number',
+                      Type: 'Int',
+                      Attribute: 'Foo.Int'
+                    }
+                  ]}
+                  immutableTree={QueryBuilderWrapped.getImmutableTree()}
+                  validations={{
+                    String: val => val.length < 5
+                  }}
+                />
               </FormGroup>
             </Form>
           </div>

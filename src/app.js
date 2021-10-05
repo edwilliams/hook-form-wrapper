@@ -3,11 +3,14 @@ import FormDemo from './form-demo'
 
 const App = () => {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={FormDemo} />
-      </Switch>
-    </Router>
+    <>
+      <style>{'.rule--error { display: none; }'}</style>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={FormDemo} />
+        </Switch>
+      </Router>
+    </>
   )
 }
 

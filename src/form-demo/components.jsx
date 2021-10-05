@@ -51,7 +51,7 @@ export const Input = ({ control, label, name, rules }) => {
 
 export const QueryBuilderWrapped = {
   Component: ({
-    formMeta = {},
+    name,
     label,
     validations,
     metaPayload,
@@ -68,20 +68,16 @@ export const QueryBuilderWrapped = {
           validations={validations}
           metaPayload={metaPayload}
           immutableTree={immutableTree}
-          formMeta={formMeta}
-          onChange={({ query, immutableTree }) => {
-            onChange({ query, immutableTree })
-          }}
-          // using setData in onError can cause infinite rendering
-          onError={({ name, value }) => {
+          formMeta={{}}
+          onChange={onChange}
+          onError={({ displayName, value }) => {
             const newErrors = {
               ...data.queryBuilderErrors,
-              // todo: get name
-              'qb-one': {
-                message: `"${value}" is an incorrect value for "${name}"`
+              [name]: {
+                message: `"${value}" is an incorrect value for "${displayName}"`
               }
             }
-            // todo: unset error
+            // using setData in onError can cause infinite rendering
             if (!isEqual(data.queryBuilderErrors, newErrors)) {
               setData({
                 key: 'queryBuilderErrors',
@@ -90,9 +86,6 @@ export const QueryBuilderWrapped = {
             }
           }}
         />
-
-        {/* NB will we need to display error here as well as in Form Summary */}
-        {false && <p className="text-red-500">Error: ...</p>}
       </div>
     )
   },

@@ -21,7 +21,7 @@ export const convertMetaToFields = ({
               if (!isValid)
                 onError({
                   formMeta,
-                  name: DisplayName,
+                  displayName: DisplayName,
                   type: 'multiselect',
                   value: val
                 })
@@ -46,7 +46,7 @@ export const convertMetaToFields = ({
               if (!isValid)
                 onError({
                   formMeta,
-                  name: DisplayName,
+                  displayName: DisplayName,
                   type: 'number',
                   value: val
                 })
@@ -72,7 +72,7 @@ export const convertMetaToFields = ({
               if (!isValid)
                 onError({
                   formMeta,
-                  name: DisplayName,
+                  displayName: DisplayName,
                   type: 'boolean',
                   value: val
                 })
@@ -96,7 +96,7 @@ export const convertMetaToFields = ({
               if (!isValid)
                 onError({
                   formMeta,
-                  name: DisplayName,
+                  displayName: DisplayName,
                   type: 'datetime',
                   value: val
                 })
@@ -121,7 +121,7 @@ export const convertMetaToFields = ({
               if (!isValid)
                 onError({
                   formMeta,
-                  name: DisplayName,
+                  displayName: DisplayName,
                   type: 'text',
                   value: val
                 })

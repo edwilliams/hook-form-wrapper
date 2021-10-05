@@ -9,6 +9,8 @@ import { GlobalAnt, ScopedAnt } from './styled/antd'
 import { GlobalQueryBuilderStyles } from './styled/raqb'
 // import { withStyles } from './styled/custom'
 
+const noop = () => {}
+
 const QueryBuilder = ({
   readonly,
   disabled,
@@ -19,8 +21,8 @@ const QueryBuilder = ({
   convertValue = null,
   validations,
   formMeta,
-  onChange,
-  onError
+  onChange = noop,
+  onError = noop
 }) => {
   const initialConfig = getConfig({
     readonly: readonly || disabled,
