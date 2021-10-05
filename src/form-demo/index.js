@@ -60,31 +60,29 @@ export default function App() {
                 <br />
                 <br />
 
-                {true ? (
-                  <QueryBuilderWrapped.Component
-                    formElementType="query-builder"
-                    name="qb-one"
-                    label="Query Builder One"
-                    metaPayload={[
-                      {
-                        Id: 1,
-                        DisplayName: 'Device AD Site Name',
-                        Type: 'String',
-                        Attribute: 'Fizz.String'
-                      },
-                      {
-                        Id: 2,
-                        DisplayName: 'Foo - Number',
-                        Type: 'Int',
-                        Attribute: 'Foo.Int'
-                      }
-                    ]}
-                    immutableTree={QueryBuilderWrapped.getImmutableTree()}
-                    validations={{
-                      String: val => val.length < 5
-                    }}
-                  />
-                ) : null}
+                <QueryBuilderWrapped.Component
+                  formElementType="query-builder"
+                  name="qb-one"
+                  label="Query Builder One"
+                  metaPayload={[
+                    {
+                      Id: 1,
+                      DisplayName: 'Device AD Site Name',
+                      Type: 'String',
+                      Attribute: 'Fizz.String'
+                    },
+                    {
+                      Id: 2,
+                      DisplayName: 'Foo - Number',
+                      Type: 'Int',
+                      Attribute: 'Foo.Int'
+                    }
+                  ]}
+                  immutableTree={QueryBuilderWrapped.getImmutableTree()}
+                  validations={{
+                    String: val => val.length < 5
+                  }}
+                />
 
                 <QueryBuilderWrapped.Component
                   formElementType="query-builder"

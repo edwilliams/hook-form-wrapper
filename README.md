@@ -17,6 +17,8 @@ https://forms-with-query-builder.netlify.app/
 - so for consistency we are wrapping query builder
 - we declare onError in the wrapped query builder to bury the error handling
 - todo: unset error in form summary after error is addressed
+- todo: investigate onError causing infinite rendering
+- todo: prevent submission if query builder errors are present
 - todo: confirm query builder error message / data
 
 ## refs
