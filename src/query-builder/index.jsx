@@ -3,11 +3,11 @@ import { Query, Builder, Utils as QbUtils } from 'react-awesome-query-builder'
 import getConfig from './config'
 
 import { convertTreeToNodeLeaf } from './library/query'
-import { getImmutableTree } from './library/update'
+import { getAllOperators, getImmutableTree } from './library/update'
 
 import { GlobalAnt, ScopedAnt } from './styled/antd'
 import { GlobalQueryBuilderStyles } from './styled/raqb'
-// import { withStyles } from './styled/custom'
+import { withStyles } from './styled/custom'
 
 const noop = () => {}
 
@@ -61,23 +61,7 @@ const QueryBuilder = ({
               onChange({
                 immutableTree,
                 query: convertTreeToNodeLeaf({
-                  allOperators: {
-                    equal: 'equal',
-                    not_equal: 'not_equal',
-                    in: 'in',
-                    not_in: 'not_in',
-                    greater: 'greater',
-                    greater_or_equal: 'greater_or_equal',
-                    less: 'less',
-                    less_or_equal: 'less_or_equal',
-                    is_null: 'is_null',
-                    is_not_null: 'is_not_null',
-                    like: 'like',
-                    not_like: 'not_like',
-                    begins_with: 'begins_with',
-                    ends_with: 'ends_with',
-                    ...operators
-                  },
+                  allOperators: getAllOperators(operators),
                   convertValue,
                   treeQuery: QbUtils.getTree(immutableTree)
                 })
@@ -97,8 +81,7 @@ const QueryBuilder = ({
   )
 }
 
-// eslint-disable-next-line
 export default {
-  Component: QueryBuilder, // withStyles(QueryBuilder),
+  Component: withStyles(QueryBuilder),
   getImmutableTree
 }

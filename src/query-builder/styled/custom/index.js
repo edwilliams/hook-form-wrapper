@@ -20,28 +20,22 @@ import React from 'react'
 
 import { StyledQueryGeneral } from './general'
 import { StyledQueryBackgrounds } from './backgrounds'
-import { StyledQueryHandles } from './handles'
+import { StyledQueryHeader } from './header'
 import { StyledQueryButtons } from './buttons'
-import { StyledQueryConjunctions } from './conjunctions'
-import { StyledQueryTrash } from './trash'
 import { StyledQueryDisabled } from './disabled'
 
 export const withStyles = Comp => props => {
   return (
     <>
       <StyledQueryGeneral>
-        <StyledQueryBackgrounds>
-          <StyledQueryHandles>
+        <StyledQueryBackgrounds colorOptions={props.colorOptions || {}}>
+          <StyledQueryHeader>
             <StyledQueryButtons>
-              <StyledQueryConjunctions>
-                <StyledQueryTrash>
-                  <StyledQueryDisabled>
-                    <Comp {...props} />
-                  </StyledQueryDisabled>
-                </StyledQueryTrash>
-              </StyledQueryConjunctions>
+              <StyledQueryDisabled>
+                <Comp {...props} />
+              </StyledQueryDisabled>
             </StyledQueryButtons>
-          </StyledQueryHandles>
+          </StyledQueryHeader>
         </StyledQueryBackgrounds>
       </StyledQueryGeneral>
     </>

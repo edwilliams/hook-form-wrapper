@@ -1,67 +1,169 @@
 import styled from 'styled-components'
 
 export const StyledQueryBackgrounds = styled.div`
-  .group-or-rule-container {
-    background: white;
-    border-radius: ${({ theme }) => theme.vars['border-radius-large']};
-  }
+  // Color Shade
 
-  /* Level 1 */
-  .group-container .group {
-    background: rgb(250 220 115 / 30%);
-  }
-
-  /* Level 2 */
-  .group--children .group-container .group {
-    background: rgb(145 225 235 / 30%);
-  }
-
-  /* Level 3 */
-  .group--children .group-container .group--children .group-container .group {
-    background: rgb(240 135 135 / 30%);
-  }
-
-  /* Level 4 */
-  .group--children
-    .group-container
-    .group--children
-    .group-container
-    .group--children
-    .group-container
+  .query-builder-wrapper-disabled {
     .group {
-    background: rgb(195 210 115 / 30%);
+      background-image: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.9) 100%
+      );
+
+      &::before,
+      .group--conjunctions,
+      .group::after,
+      .rule::before {
+        background-image: linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.8) 0%,
+          rgba(255, 255, 255, 0.8) 100%
+        );
+      }
+    }
   }
 
-  /* Level 5 */
-  .group--children
-    .group-container
-    .group--children
-    .group-container
-    .group--children
-    .group-container
-    .group--children
-    .group-container
-    .group {
-    background: rgb(160 120 200 / 30%);
+  .group {
+    background-image: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(255, 255, 255, 0.8) 100%
+    );
+
+    &::before,
+    .group--conjunctions,
+    .group::after,
+    .rule::before {
+      background-image: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 255, 255, 0.4) 100%
+      );
+    }
   }
+
+  // Colors
+  .group {
+    &,
+    &::before,
+    .group--conjunctions,
+    .rule::before {
+      background-color: ${({ colorOptions, theme }) =>
+        colorOptions.one ? theme.visual[colorOptions.one] : theme.visual.mould};
+    }
+
+    .group {
+      &,
+      &::before,
+      .group--conjunctions,
+      .rule::before {
+        background-color: ${({ colorOptions, theme }) =>
+          colorOptions.two
+            ? theme.visual[colorOptions.two]
+            : theme.visual.lime};
+      }
+
+      .group {
+        &,
+        &::before,
+        .group--conjunctions,
+        .rule::before {
+          background-color: ${({ colorOptions, theme }) =>
+            colorOptions.three
+              ? theme.visual[colorOptions.three]
+              : theme.visual.fig};
+        }
+
+        .group {
+          &,
+          &::before,
+          .group--conjunctions,
+          .rule::before {
+            background-color: ${({ colorOptions, theme }) =>
+              colorOptions.four
+                ? theme.visual[colorOptions.four]
+                : theme.visual.sloe};
+          }
+
+          .group {
+            &,
+            &::before,
+            .group--conjunctions,
+            .rule::before {
+              background-color: ${({ colorOptions, theme }) =>
+                colorOptions.five
+                  ? theme.visual[colorOptions.five]
+                  : theme.visual.banana};
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .group {
+    .group {
+      &::after {
+        background-color: ${({ colorOptions, theme }) =>
+          colorOptions.one
+            ? theme.visual[colorOptions.one]
+            : theme.visual.mould};
+      }
+
+      .group {
+        &::after {
+          background-color: ${({ colorOptions, theme }) =>
+            colorOptions.two
+              ? theme.visual[colorOptions.two]
+              : theme.visual.lime};
+        }
+
+        .group {
+          &::after {
+            background-color: ${({ colorOptions, theme }) =>
+              colorOptions.three
+                ? theme.visual[colorOptions.three]
+                : theme.visual.fig};
+          }
+
+          .group {
+            &::after {
+              background-color: ${({ colorOptions, theme }) =>
+                colorOptions.four
+                  ? theme.visual[colorOptions.four]
+                  : theme.visual.sloe};
+            }
+
+            .group {
+              &::after {
+                background-color: ${({ colorOptions, theme }) =>
+                  colorOptions.five
+                    ? theme.visual[colorOptions.five]
+                    : theme.visual.banana};
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   .rule-container:not(.rule-with-error) {
     .rule.group-or-rule,
     .group {
       border-left: none;
-      border-right: 1px solid
-        ${({ colorOptions = [], theme }) =>
-          colorOptions[12] || theme.layout.mid};
-      border-top: 1px solid
-        ${({ colorOptions = [], theme }) =>
-          colorOptions[12] || theme.layout.mid};
-      border-bottom: 1px solid
-        ${({ colorOptions = [], theme }) =>
-          colorOptions[12] || theme.layout.mid};
+      border-right: 1px solid ${({ theme }) => theme.layout.mid};
+      border-top: 1px solid ${({ theme }) => theme.layout.mid};
+      border-bottom: 1px solid ${({ theme }) => theme.layout.mid};
     }
   }
   .rule-with-error {
     .rule--error {
       display: none;
+    }
+    .rule {
+      outline: 1px solid red;
     }
   }
 `

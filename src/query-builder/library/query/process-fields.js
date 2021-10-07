@@ -3,21 +3,6 @@ import { isDate, getISO } from './utils'
 // NB to add / remove % symbols for leaves with "like" or "not_like" operators
 // _would_ require passing down all operators (in case "like" / "not_like" had been renamed)
 // all the way from `QueryBuilder.getImmutableTree` to `_processLeafValue`
-// hence storing it when `processRuleFields` executes
-const _store = () => {
-  const store = { operators: {} }
-  return {
-    get() {
-      return store.operators
-    },
-    set(ops) {
-      store.operators = { ...store.operators, ...ops }
-      return { ...store.operators, ...ops }
-    }
-  }
-}
-
-const store = _store()
 
 const _processRuleOperator = ({ allOperators = {}, operator = '' }) => {
   return operator === 'equal' || operator === 'datetime_equal'
@@ -79,14 +64,12 @@ const _processRuleValue = ({
 
 export const processRuleFields = ({
   type,
-  allOperators,
+  allOperators = {},
   convertValue,
   operator,
   field,
   value
 }) => {
-  store.set(allOperators)
-
   return {
     Operator: _processRuleOperator({ allOperators, operator }),
     Attribute: field,
@@ -107,7 +90,12 @@ const lastCharPercent = (str = '') =>
   str && str.split('')[str.length - 1] === '%'
 const firstCharPercent = (str = '') => str && str.split('')[0] === '%'
 
-const _processLeafOperator = ({ _type, Operator = '', Value }) => {
+const _processLeafOperator = ({
+  _type,
+  allOperators,
+  Operator = '',
+  Value
+}) => {
   const str =
     Operator === '=='
       ? 'equal'
@@ -121,11 +109,11 @@ const _processLeafOperator = ({ _type, Operator = '', Value }) => {
       ? 'less_or_equal'
       : Operator === '>='
       ? 'greater_or_equal'
-      : Operator === 'like' &&
+      : Operator === allOperators.like &&
         !firstCharPercent(Value) &&
         lastCharPercent(Value)
       ? 'begins_with'
-      : Operator === 'like' &&
+      : Operator === allOperators.like &&
         firstCharPercent(Value) &&
         !lastCharPercent(Value)
       ? 'ends_with'
@@ -138,10 +126,14 @@ const _processLeafOperator = ({ _type, Operator = '', Value }) => {
     : str
 }
 
-const _processLeafValue = ({ _type, Value, Operator = '' }) => {
-  const ops = store.get()
-  const like = ops.like || 'like'
-  const not_like = ops.not_like || 'not_like'
+const _processLeafValue = ({
+  _type,
+  allOperators = {},
+  Value,
+  Operator = ''
+}) => {
+  const like = allOperators.like || 'like'
+  const not_like = allOperators.not_like || 'not_like'
 
   return Value === null
     ? []
@@ -182,14 +174,20 @@ const _processLeafValueType = ({ _type, Value }) => {
     : ['text'] // default
 }
 
-export const processLeafFields = ({ _type, Operator, Attribute, Value }) => {
+export const processLeafFields = ({
+  _type,
+  allOperators = {},
+  Operator,
+  Attribute,
+  Value
+}) => {
   // NB some dates come in with whitespace, e.g. '2018-08-20T00: 00: 00.000Z'
   const val =
     _type === 'datetime' && Value !== null ? Value.split(' ').join('') : Value
   return {
     field: Attribute,
-    operator: _processLeafOperator({ _type, Operator, Value }),
-    value: _processLeafValue({ _type, Value: val, Operator }),
+    operator: _processLeafOperator({ _type, allOperators, Operator, Value }),
+    value: _processLeafValue({ _type, allOperators, Value: val, Operator }),
     valueSrc: _processLeafValueSrc({ Operator }),
     valueType: _processLeafValueType({ _type, Value: val })
   }

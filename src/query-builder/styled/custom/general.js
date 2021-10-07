@@ -1,11 +1,10 @@
 import styled from 'styled-components'
 
 export const StyledQueryGeneral = styled.div`
-  /* fonts and colours */
+  /* fonts and colors */
   .ant-input,
   .ant-input-number-input {
-    color: ${({ colorOptions = [], theme }) =>
-      colorOptions[10] || theme.layout.fore};
+    color: ${({ theme }) => theme.layout.fore};
     font-size: ${({ theme }) => theme.vars['font-size-sm']};
   }
 
@@ -32,7 +31,7 @@ export const StyledQueryGeneral = styled.div`
     border-color: rgba(0, 0, 0, 0);
   }
 
-  /* Changing padding allows box colour to stretch full width */
+  /* Changing padding allows box color to stretch full width */
   .group-or-rule-container {
     padding-right: 0;
   }
@@ -54,6 +53,31 @@ export const StyledQueryGeneral = styled.div`
     align-items: center;
   }
 
+  .rule--value {
+    margin-right: ${({ theme }) => theme.spacer};
+
+    > .rule--widget,
+    > .rule--widget,
+    > .rule--widget,
+    > .rule--widgey {
+      width: 100%;
+
+      > .widget--widget {
+        width: 100%;
+      }
+    }
+
+    .rule--widget--DATETIME,
+    .rule--widget--MULTISELECT {
+      > .widget--widget {
+        > .ant-picker,
+        > .ant-select {
+          width: 100% !important;
+        }
+      }
+    }
+  }
+
   .rule--field .ant-select,
   .rule--operator .ant-select,
   .rule--value .ant-input-number {
@@ -65,18 +89,107 @@ export const StyledQueryGeneral = styled.div`
     height: 32px;
   }
 
-  /* Coloured container */
-  .group-or-rule {
-    border-top-right-radius: ${({ theme }) =>
-      theme.vars['border-radius-large']};
-    border-bottom-right-radius: ${({ theme }) =>
-      theme.vars['border-radius-large']};
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
+  .group--children {
+    padding: 0;
+    margin: ${({ theme }) => `${theme.spacer} 0 0`};
   }
-  .group-or-rule-container.rule-container .group-or-rule {
-    border-bottom-left-radius: ${({ theme }) =>
-      theme.vars['border-radius-large']};
-    border-top-left-radius: ${({ theme }) => theme.vars['border-radius-large']};
+
+  .rule-container {
+    padding: 0;
+    margin-bottom: ${({ theme }) => theme.spacer};
+
+    .rule {
+      padding: ${({ theme }) =>
+        `${theme.mixin.sizer(0.5)} ${theme.spacer} ${theme.mixin.sizer(
+          0.5
+        )} ${theme.mixin.sizer(3)}`};
+      position: relative;
+      border: 1px solid ${({ theme }) => theme.layout.mid};
+      border-left: 1px solid ${({ theme }) => theme.layout.mid} !important;
+      border-radius: 4px;
+
+      &::after {
+        display: none;
+      }
+
+      &::before {
+        width: calc(2px + ${({ theme }) => theme.spacer}) !important;
+        height: ${({ theme }) => theme.mixin.sizer(0.5)} !important;
+        border: 1px solid ${({ theme }) => theme.layout.mid} !important;
+        border-left-width: 0 !important;
+        border-right-width: 0 !important;
+        left: calc(-2px - ${({ theme }) => theme.spacer}) !important;
+        top: 50% !important;
+        margin-top: ${({ theme }) => theme.mixin.sizer(-0.5)} !important;
+        box-sizing: content-box !important;
+        border-radius: 0 !important;
+      }
+    }
+
+    .rule--drag-handler {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      opacity: 1 !important;
+      width: 14px;
+      background-color: ${({ theme }) => theme.layout.light};
+      border-right: 1px solid ${({ theme }) => theme.layout.mid};
+      border-radius: 4px 0 0 4px;
+
+      svg {
+        fill: ${({ theme }) => theme.layout.fore};
+      }
+    }
+
+    .rule--header {
+      opacity: 1 !important;
+    }
+  }
+
+  .group-container {
+    padding: 0 0 0 ${({ theme }) => theme.spacer};
+    border: 1px solid ${({ theme }) => theme.layout.mid};
+    border-radius: 4px;
+
+    .group {
+      position: relative;
+      border: none !important;
+      border-radius: unset;
+      padding: ${({ theme }) =>
+        `${theme.mixin.sizer(0.5)} ${theme.spacer} ${theme.spacer}`};
+
+      &::before {
+        content: '' !important;
+        width: ${({ theme }) => theme.spacer} !important;
+        position: absolute;
+        left: -${({ theme }) => theme.spacer} !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        height: auto !important;
+        border-right: 1px solid ${({ theme }) => theme.layout.mid} !important;
+        border-left: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        border-radius: 4px 0 0 4px;
+      }
+
+      .group {
+        &::after {
+          content: '';
+          display: inline-block !important;
+          width: calc(2px + ${({ theme }) => theme.spacer}) !important;
+          height: ${({ theme }) => theme.mixin.sizer(0.5)} !important;
+          border: 1px solid ${({ theme }) => theme.layout.mid} !important;
+          border-left-width: 0 !important;
+          border-right-width: 0 !important;
+          left: calc(-2px - ${({ theme }) => theme.mixin.sizer(2)}) !important;
+          top: 50% !important;
+          margin-top: ${({ theme }) => theme.mixin.sizer(-0.5)} !important;
+          box-sizing: content-box !important;
+          border-radius: 0 !important;
+        }
+      }
+    }
   }
 `

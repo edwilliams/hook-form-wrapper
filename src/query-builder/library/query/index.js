@@ -53,7 +53,8 @@ export const convertTreeToNodeLeaf = ({
 
 export const convertNodeLeafToTree = ({
   nodeLeafQuery = {},
-  id = QbUtils.uuid()
+  id = QbUtils.uuid(),
+  allOperators
 }) => {
   const query = {
     id,
@@ -69,7 +70,7 @@ export const convertNodeLeafToTree = ({
   if (!nodeLeafQuery.Operands) {
     query.children1.obj1 = {
       type: 'rule',
-      properties: processLeafFields({ ...nodeLeafQuery })
+      properties: processLeafFields({ allOperators, ...nodeLeafQuery })
     }
   } else {
     // if an object has Operands, it's a group. Otherwise it's a rule
@@ -78,7 +79,7 @@ export const convertNodeLeafToTree = ({
       if (!op.Operands) {
         query.children1[`obj${a + 1}`] = {
           type: 'rule',
-          properties: processLeafFields({ ...op })
+          properties: processLeafFields({ allOperators, ...op })
         }
       } else {
         query.children1[`obj${a + 1}`] = {
@@ -93,7 +94,7 @@ export const convertNodeLeafToTree = ({
           if (!op.Operands) {
             query.children1[`obj${a + 1}`].children1[`obj${a + 1 + b + 1}`] = {
               type: 'rule',
-              properties: processLeafFields({ ...op })
+              properties: processLeafFields({ allOperators, ...op })
             }
           } else {
             query.children1[`obj${a + 1}`].children1[`obj${a + 1 + b + 1}`] = {
@@ -110,7 +111,7 @@ export const convertNodeLeafToTree = ({
                   `obj${a + 1 + b + 1}`
                 ].children1[`obj${a + 1 + b + 1 + c + 1}`] = {
                   type: 'rule',
-                  properties: processLeafFields({ ...op })
+                  properties: processLeafFields({ allOperators, ...op })
                 }
               } else {
                 query.children1[`obj${a + 1}`].children1[
@@ -131,7 +132,7 @@ export const convertNodeLeafToTree = ({
                       `obj${a + 1 + b + 1 + c + 1 + d + 1}`
                     ] = {
                       type: 'rule',
-                      properties: processLeafFields({ ...op })
+                      properties: processLeafFields({ allOperators, ...op })
                     }
                   } else {
                     query.children1[`obj${a + 1}`].children1[
@@ -156,7 +157,10 @@ export const convertNodeLeafToTree = ({
                           `obj${a + 1 + b + 1 + c + 1 + d + 1 + e + 1}`
                         ] = {
                           type: 'rule',
-                          properties: processLeafFields({ ...op })
+                          properties: processLeafFields({
+                            allOperators,
+                            ...op
+                          })
                         }
                       } else {
                         if (process.env.NODE_ENV !== 'test') {
