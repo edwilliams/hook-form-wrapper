@@ -1,12 +1,12 @@
-import { createContext, useState } from 'react'
+import React, { createContext, useState } from 'react'
 import { produce } from 'immer'
 
-export const FormContext = createContext({
+export const Context = createContext({
   data: {},
   setData: () => {}
 })
 
-export const FormCtxProvider = ({ children }) => {
+export const CtxProvider = ({ children }) => {
   const [state, setState] = useState({
     data: {
       ref: {},
@@ -36,5 +36,5 @@ export const FormCtxProvider = ({ children }) => {
     }
   })
 
-  return <FormContext.Provider value={state}>{children}</FormContext.Provider>
+  return <Context.Provider value={state}>{children}</Context.Provider>
 }

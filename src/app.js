@@ -1,5 +1,5 @@
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
-import FormDemo from './form-demo'
+import FormDemo from './form-demo/demo'
 
 const App = () => {
   return (

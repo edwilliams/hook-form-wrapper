@@ -2,17 +2,14 @@ import React, { useContext, useEffect, useRef } from 'react'
 
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { FormContext } from './context'
+import { CtxProvider as _CtxProvider } from './context'
+import * as Components from './components'
+
+import { Context } from './context'
 import { getSummarySections } from './utils'
 
-export const Form = ({
-  showSubmit,
-  title,
-  defaultValues,
-  children,
-  onSubmit
-}) => {
-  const { data, setData } = useContext(FormContext)
+const FormNew = ({ showSubmit, title, defaultValues, children, onSubmit }) => {
+  const { data, setData } = useContext(Context)
   // const [rules, setRules] = useState([])
 
   const methods = useForm({ mode: 'all', defaultValues })
@@ -78,10 +75,16 @@ export const Form = ({
 }
 
 // NB element wrapping children may be div, fieldset or legend
-export const FormGroup = ({ title, children }) => (
+export const Group = ({ title, children }) => (
   <div className="mt-4" data-title={title}>
     <h3 className="text-xl">{title}</h3>
     <hr className="mt-4 mb-4 border-blue-500" />
     <div>{children}</div>
   </div>
 )
+
+export default FormNew
+export const CtxProvider = _CtxProvider
+export const Summary = Components.Summary
+export const Input = Components.Input
+export const QueryBuilder = Components.QueryBuilder
