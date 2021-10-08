@@ -67,8 +67,15 @@ const FormNew = ({ showSubmit, title, defaultValues, children, onSubmit }) => {
     <FormProvider {...methods}>
       <form onSubmit={submit} onChange={setSummaryData}>
         {React.Children.map(children, child => {
-          if (!child) return
-          else return child
+          if (!child) {
+            return
+          } else {
+            return child
+            // return React.createElement(child.type, {
+            //   ...child.props,
+            //   setError
+            // })
+          }
         })}
         <input
           style={{ display: showSubmit ? 'block' : 'none' }}
@@ -80,17 +87,9 @@ const FormNew = ({ showSubmit, title, defaultValues, children, onSubmit }) => {
   )
 }
 
-// NB element wrapping children may be div, fieldset or legend
-export const Group = ({ title, children }) => (
-  <div className="mt-4" data-title={title}>
-    <h3 className="text-xl">{title}</h3>
-    <hr className="mt-4 mb-4 border-blue-500" />
-    <div>{children}</div>
-  </div>
-)
-
 export default FormNew
 export const CtxProvider = _CtxProvider
+export const Group = Components.Group
 export const Summary = Components.Summary
 export const Input = Components.Input
 export const QueryBuilder = Components.QueryBuilder

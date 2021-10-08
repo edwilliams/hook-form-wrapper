@@ -71,6 +71,29 @@ export const Summary = ({ children }) => {
   )
 }
 
+// NB element wrapping children may be div, fieldset or legend
+export const Group = ({ title, children, setError }) => {
+  return (
+    <div className="mt-4" data-title={title}>
+      <h3 className="text-xl">{title}</h3>
+      <hr className="mt-4 mb-4 border-blue-500" />
+      {/* <div>{children}</div> */}
+      <div>
+        {React.Children.map(children, child => {
+          if (!child) {
+            return
+          } else {
+            return React.createElement(child.type, {
+              ...child.props,
+              setError
+            })
+          }
+        })}
+      </div>
+    </div>
+  )
+}
+
 export const Input = ({ control, label, name, rules }) => {
   const {
     field, // i.e. { ref, name, value, onChange, onBlur }
