@@ -100,3 +100,6 @@ export const getSummarySections = ({
     }
   })
 }
+
+// todo: replace? lodash
+export const isEmptyObject = obj => Object.keys(obj).length === 0

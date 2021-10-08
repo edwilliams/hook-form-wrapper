@@ -6,7 +6,7 @@ import { CtxProvider as _CtxProvider } from './context'
 import * as Components from './components'
 
 import { Context } from './context'
-import { getSummarySections } from './utils'
+import { isEmptyObject, getSummarySections } from './utils'
 
 const FormNew = ({ showSubmit, title, defaultValues, children, onSubmit }) => {
   const { data, setData } = useContext(Context)
@@ -19,6 +19,7 @@ const FormNew = ({ showSubmit, title, defaultValues, children, onSubmit }) => {
     formState: { errors },
     watch,
     setFocus
+    // setError
   } = methods
 
   const ref = useRef()
@@ -53,8 +54,13 @@ const FormNew = ({ showSubmit, title, defaultValues, children, onSubmit }) => {
   }, [])
 
   const submit = e => {
+    e.preventDefault()
     setSummaryData()
-    handleSubmit(onSubmit)(e)
+    if (isEmptyObject(data.queryBuilderErrors)) {
+      handleSubmit(obj => onSubmit({ ...obj, query: data.queryBuilderQuery }))(
+        e
+      )
+    }
   }
 
   return (

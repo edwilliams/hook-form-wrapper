@@ -18,13 +18,13 @@ export const convertMetaToFields = ({
             const hasValidation = val && typeof validations.List === 'function'
             if (hasValidation) {
               const isValid = validations.List(val)
-              if (!isValid)
-                onError({
-                  formMeta,
-                  displayName: DisplayName,
-                  type: 'multiselect',
-                  value: val
-                })
+              onError({
+                formMeta,
+                displayName: DisplayName,
+                type: 'multiselect',
+                value: val,
+                error: !isValid
+              })
               return isValid
             } else {
               return true
@@ -40,16 +40,17 @@ export const convertMetaToFields = ({
         preferWidgets: ['number'],
         fieldSettings: {
           validateValue: val => {
+            // todo: cater for Decimal too
             const hasValidation = val && typeof validations.Int === 'function'
             if (hasValidation) {
               const isValid = validations.Int(val)
-              if (!isValid)
-                onError({
-                  formMeta,
-                  displayName: DisplayName,
-                  type: 'number',
-                  value: val
-                })
+              onError({
+                formMeta,
+                displayName: DisplayName,
+                type: 'number',
+                value: val,
+                error: !isValid
+              })
               return isValid
             } else {
               return true
@@ -69,13 +70,13 @@ export const convertMetaToFields = ({
               val && typeof validations.Boolean === 'function'
             if (hasValidation) {
               const isValid = validations.Boolean(val)
-              if (!isValid)
-                onError({
-                  formMeta,
-                  displayName: DisplayName,
-                  type: 'boolean',
-                  value: val
-                })
+              onError({
+                formMeta,
+                displayName: DisplayName,
+                type: 'boolean',
+                value: val,
+                error: !isValid
+              })
               return isValid
             } else {
               return true
@@ -93,13 +94,13 @@ export const convertMetaToFields = ({
               val && typeof validations.DateTime === 'function'
             if (hasValidation) {
               const isValid = validations.DateTime(val)
-              if (!isValid)
-                onError({
-                  formMeta,
-                  displayName: DisplayName,
-                  type: 'datetime',
-                  value: val
-                })
+              onError({
+                formMeta,
+                displayName: DisplayName,
+                type: 'datetime',
+                value: val,
+                error: !isValid
+              })
               return isValid
             } else {
               return true
@@ -118,13 +119,13 @@ export const convertMetaToFields = ({
               val && typeof validations.String === 'function'
             if (hasValidation) {
               const isValid = validations.String(val)
-              if (!isValid)
-                onError({
-                  formMeta,
-                  displayName: DisplayName,
-                  type: 'text',
-                  value: val
-                })
+              onError({
+                formMeta,
+                displayName: DisplayName,
+                type: 'text',
+                value: val,
+                error: !isValid
+              })
               return isValid
             } else {
               return true

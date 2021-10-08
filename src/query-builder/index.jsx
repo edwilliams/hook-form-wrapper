@@ -7,7 +7,7 @@ import { getAllOperators, getImmutableTree } from './library/update'
 
 import { GlobalAnt, ScopedAnt } from './styled/antd'
 import { GlobalQueryBuilderStyles } from './styled/raqb'
-import { withStyles } from './styled/custom'
+// import { withStyles } from './styled/custom'
 
 const noop = () => {}
 
@@ -81,7 +81,8 @@ const QueryBuilder = ({
   )
 }
 
+// eslint-disable-next-line
 export default {
-  Component: withStyles(QueryBuilder),
+  Component: QueryBuilder, //withStyles(QueryBuilder),
   getImmutableTree
 }

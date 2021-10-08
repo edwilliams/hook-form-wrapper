@@ -25,7 +25,8 @@ export const CtxProvider = ({ children }) => {
         //   ]
         // }
       ],
-      queryBuilderErrors: {}
+      queryBuilderErrors: {},
+      queryBuilderQuery: {}
     },
     setData: ({ key, val }) => {
       setState(

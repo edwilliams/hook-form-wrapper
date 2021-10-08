@@ -48,7 +48,7 @@ export const Summary = ({ children }) => {
                           onClick={() => onClickError({ name })}
                           className="mt-2 text-red-500 font-bold cursor-pointer"
                         >
-                          ⚠️ {desc}
+                          {desc}
                         </li>
                       ))}
                   </ul>
@@ -98,6 +98,8 @@ export const Input = ({ control, label, name, rules }) => {
   )
 }
 
+const noop = () => {}
+
 export const QueryBuilder = {
   Component: ({
     name,
@@ -105,7 +107,7 @@ export const QueryBuilder = {
     validations,
     metaPayload,
     immutableTree,
-    onChange
+    onChange = noop
   }) => {
     const { data, setData } = useContext(Context)
 
@@ -117,15 +119,37 @@ export const QueryBuilder = {
           validations={validations}
           metaPayload={metaPayload}
           immutableTree={immutableTree}
-          formMeta={{}}
-          onChange={onChange}
-          onError={({ displayName, value }) => {
-            const newErrors = {
-              ...data.queryBuilderErrors,
-              [name]: {
-                message: `"${value}" is an incorrect value for "${displayName}"`
-              }
+          formMeta={{
+            message: '⚠️ "{value}" is an incorrect value for "{displayName}"'
+          }}
+          onChange={({ query, immutableTree }) => {
+            // using setData in onChange can cause infinite rendering
+            if (!isEqual(data.queryBuilderQuery, query)) {
+              setData({
+                key: 'queryBuilderQuery',
+                val: query
+              })
             }
+
+            onChange({ query, immutableTree })
+          }}
+          onError={({ displayName, value, error, formMeta }) => {
+            const newErrors = {
+              ...data.queryBuilderErrors
+            }
+
+            if (error) {
+              newErrors[name] = {
+                message: formMeta.message
+                  ? formMeta.message
+                      .replace('{value}', value)
+                      .replace('{displayName}', displayName)
+                  : 'Error'
+              }
+            } else {
+              delete newErrors[name]
+            }
+
             // using setData in onError can cause infinite rendering
             if (!isEqual(data.queryBuilderErrors, newErrors)) {
               setData({
